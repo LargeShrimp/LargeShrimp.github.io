@@ -4,32 +4,25 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>AutoLayout用法（一） | taitanxiami</title>
+    <title>理解block（块） | taitanxiami</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="taitanxiami">
     
 
     
-    <meta name="description" content="今天介绍下用AutoLauout实现等距约束。
-####先看下效果图">
+    <meta name="description" content="block的结构图">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AutoLayout用法（一）">
-<meta property="og:url" content="http://taitanxiami.com/2015/04/04/AutoLayout用法（一）/index.html">
+<meta property="og:title" content="理解block（块）">
+<meta property="og:url" content="http://taitanxiami.com/2015/04/19/理解block/index.html">
 <meta property="og:site_name" content="taitanxiami">
-<meta property="og:description" content="今天介绍下用AutoLauout实现等距约束。
-####先看下效果图">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/809fd07fjw1eqtk5o2rs4j21kw0yoq5a.jpg">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/809fd07fjw1eqtky4dlo3g20q30i2q9i.gif">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/809fd07fjw1eqtm6uahhzg20uk0i14kk.gif">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/809fd07fjw1eqtmkwt700g20uk0ibqv7.gif">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/809fd07fjw1eqtmwxp5agg20xa0jk4qp.gif">
+<meta property="og:description" content="block的结构图">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/809fd07fgw1erb980sqr6j20vo0brtbe.jpg">
 <meta property="og:updated_time" content="2016-05-26T14:29:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AutoLayout用法（一）">
-<meta name="twitter:description" content="今天介绍下用AutoLauout实现等距约束。
-####先看下效果图">
-<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/809fd07fjw1eqtk5o2rs4j21kw0yoq5a.jpg">
+<meta name="twitter:title" content="理解block（块）">
+<meta name="twitter:description" content="block的结构图">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/809fd07fgw1erb980sqr6j20vo0brtbe.jpg">
 
     
     <link rel="alternative" href="/atom.xml" title="taitanxiami" type="application/atom+xml">
@@ -89,14 +82,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/04/04/AutoLayout用法（一）/" title="AutoLayout用法（一）" itemprop="url">AutoLayout用法（一）</a>
+      <a href="/2015/04/19/理解block/" title="理解block（块）" itemprop="url">理解block（块）</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2015-04-04T06:23:39.000Z" itemprop="datePublished"> Published 2015-04-04</time>
+    <time datetime="2015-04-19T15:42:47.000Z" itemprop="datePublished"> Published 2015-04-19</time>
     
   </p>
 </header>
@@ -105,27 +98,28 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建一个带view的xib文件"><span class="toc-number">1.</span> <span class="toc-text">创建一个带view的xib文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建我们需要4个UIButton和5个UIView-辅助视图，就是button之间的间距"><span class="toc-number">2.</span> <span class="toc-text">创建我们需要4个UIButton和5个UIView(辅助视图，就是button之间的间距)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#给按钮添加约束"><span class="toc-number">3.</span> <span class="toc-text">给按钮添加约束</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#给view设置等宽，再加一个高度"><span class="toc-number">4.</span> <span class="toc-text">给view设置等宽，再加一个高度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#让他们的上下边距相等，左右边距为0"><span class="toc-number">5.</span> <span class="toc-text">让他们的上下边距相等，左右边距为0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最后在preview中查看个尺寸的效果"><span class="toc-number">6.</span> <span class="toc-text">最后在preview中查看个尺寸的效果</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#block的基本用法"><span class="toc-number">1.</span> <span class="toc-text">block的基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#默认情况下，为block所捕获的变量，是不可以在块里修改的-需要加-block"><span class="toc-number">2.</span> <span class="toc-text">默认情况下，为block所捕获的变量，是不可以在块里修改的(需要加__block)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#全局块"><span class="toc-number">3.</span> <span class="toc-text">全局块</span></a></li></ol>
 		
 		</div>
 		
-		<p>今天介绍下用<code>AutoLauout</code>实现<code>等距约束</code>。</p>
-<p>####先看下效果图</p>
-<p><img src="http://ww3.sinaimg.cn/large/809fd07fjw1eqtk5o2rs4j21kw0yoq5a.jpg" alt="nihao"></p>
+		<hr>
+<p>block的结构图   </p>
+<p><img src="http://ww1.sinaimg.cn/large/809fd07fgw1erb980sqr6j20vo0brtbe.jpg" alt="block结构图"></p>
 <a id="more"></a>
-<h4 id="创建一个带view的xib文件"><a href="#创建一个带view的xib文件" class="headerlink" title="创建一个带view的xib文件"></a>创建一个带view的xib文件</h4><p>在Attibute inspector 设置status bar为none ,size 为freeform 这里我只考虑竖屏，所以size classes我们选择 (高度设置成100吧)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//适配所有iphone竖屏</span><br><span class="line">w:compact h:regular</span><br></pre></td></tr></table></figure>
-<h4 id="创建我们需要4个UIButton和5个UIView-辅助视图，就是button之间的间距"><a href="#创建我们需要4个UIButton和5个UIView-辅助视图，就是button之间的间距" class="headerlink" title="创建我们需要4个UIButton和5个UIView(辅助视图，就是button之间的间距)"></a>创建我们需要4个UIButton和5个UIView(辅助视图，就是button之间的间距)</h4><p>其中按钮我们是正方形w:75 ,这里需要等宽等高（宽和高都为75，定值），当屏幕变化的时候，不能改变按钮的大小，辅助view呢，为了满足按钮间的间距相等，所以五个view呢我们希望他们左右的约束为0，宽度始终相同。</p>
-<h4 id="给按钮添加约束"><a href="#给按钮添加约束" class="headerlink" title="给按钮添加约束"></a>给按钮添加约束</h4><p><img src="http://ww3.sinaimg.cn/large/809fd07fjw1eqtky4dlo3g20q30i2q9i.gif" alt="按钮等宽等高"></p>
-<h4 id="给view设置等宽，再加一个高度"><a href="#给view设置等宽，再加一个高度" class="headerlink" title="给view设置等宽，再加一个高度"></a>给view设置等宽，再加一个高度</h4><p><img src="http://ww2.sinaimg.cn/large/809fd07fjw1eqtm6uahhzg20uk0i14kk.gif" alt="给view设置等宽"></p>
-<h4 id="让他们的上下边距相等，左右边距为0"><a href="#让他们的上下边距相等，左右边距为0" class="headerlink" title="让他们的上下边距相等，左右边距为0"></a>让他们的上下边距相等，左右边距为0</h4><p><img src="http://ww3.sinaimg.cn/large/809fd07fjw1eqtmkwt700g20uk0ibqv7.gif" alt="边距相等"></p>
-<h4 id="最后在preview中查看个尺寸的效果"><a href="#最后在preview中查看个尺寸的效果" class="headerlink" title="最后在preview中查看个尺寸的效果"></a>最后在preview中查看个尺寸的效果</h4><p><img src="http://ww3.sinaimg.cn/large/809fd07fjw1eqtmwxp5agg20xa0jk4qp.gif" alt="preview"><br>7.效果出来后就把view设置成透明即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return_type (^block_name)(paratemters)</span><br></pre></td></tr></table></figure>
+<h4 id="block的基本用法"><a href="#block的基本用法" class="headerlink" title="block的基本用法"></a>block的基本用法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int additional = 5;</span><br><span class="line">int (^addBlock)(int a, int b) = ^(int a, int b)&#123;</span><br><span class="line">	return a + b+ addition;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="默认情况下，为block所捕获的变量，是不可以在块里修改的-需要加-block"><a href="#默认情况下，为block所捕获的变量，是不可以在块里修改的-需要加-block" class="headerlink" title="默认情况下，为block所捕获的变量，是不可以在块里修改的(需要加__block)"></a>默认情况下，为block所捕获的变量，是不可以在块里修改的(需要加__block)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NSArray *array = @[@0, @1, @2, @3, @4, @5];</span><br><span class="line"></span><br><span class="line">__block int count = 0;</span><br><span class="line">   </span><br><span class="line">[array enumerateObjectsUsingBlock:^(NSNumber *number, NSUInteger idx, BOOL *stop) &#123;</span><br><span class="line">       </span><br><span class="line">       if ([number compare:@2] == NSOrderedAscending) &#123;</span><br><span class="line">           </span><br><span class="line">           count ++;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;];</span><br><span class="line">   </span><br><span class="line">//    count = 2;</span><br></pre></td></tr></table></figure>
+<p> 块总能修改实例变量，所以在声明时无需加__block</p>
+<p>####在定义blcok的时候，所占内存分配的栈中的，这就是说，块只在定义他的那个范围内有效</p>
+<p><strong><em>一下代码就很危险</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void (^block)();</span><br><span class="line">    </span><br><span class="line">if (count == 2) &#123;</span><br><span class="line">    </span><br><span class="line">    block = ^&#123;</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;Block A&quot;);</span><br><span class="line">        </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    </span><br><span class="line">     block = ^&#123;</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;Block B&quot;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">block();</span><br></pre></td></tr></table></figure>
+<p>首先栈内存是分配是有编译器分配和释放的，以上代码中if和else中的block被分配到栈内存中（这两个块只能保证在对应的if或else语句范围内有效），如果编译器把分配给block的内存给覆写掉，那么程序就会崩溃。<br>注意：对于栈来讲，是由编译器自动管理，无需我们手工控制；对于堆来讲，释放工作有程序员控制，容易产生memory Leak。<br>为解决以上问题，我们可以给block对象发送copy消息，把block从栈复制到堆上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">void (^block)();</span><br><span class="line"> </span><br><span class="line">if (count == 2) &#123;</span><br><span class="line"> </span><br><span class="line">	 [block = ^&#123;</span><br><span class="line">	     </span><br><span class="line">	     NSLog(@&quot;Block A&quot;);</span><br><span class="line">	     </span><br><span class="line">	 &#125; copy];</span><br><span class="line">&#125;else&#123;</span><br><span class="line"> </span><br><span class="line">	 [block  =^&#123;</span><br><span class="line">	 </span><br><span class="line">	  NSLog(@&quot;Block B&quot;);</span><br><span class="line">	 	</span><br><span class="line">	 &#125; copy];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">block();</span><br></pre></td></tr></table></figure>
+<h4 id="全局块"><a href="#全局块" class="headerlink" title="全局块"></a>全局块</h4><p>可以把块定义为全局变量，在文件级别上使用。全局块可以声明到全局内存中，而不需要在每次用到得时候于栈中创建。另外全局块的copy是个空操作，因为全局块绝不可能为系统所回收。</p>
+<p>block一般有三种，NSConcreteGlobal, NSConcreteStack, NSConcreteMalloc。<br>block是可以访问block外部的变量的。<br>NSConcreteGlobal: 就像一个全局函数一样，从头到尾待在那，始终是可用的。当Block中没有引用外部变量时，block为global类型的。<br>NSConcreteStack: 保存在栈中的block，block执行完后内存会被释放掉。当block引用了外部变量时，block为stack类型的。<br>NSConcreteMallock: 保存在堆中的block，block为引用记数为0时，内存会被释放掉。当block执行copy时，block会从栈中复制到堆中。<br>以上都针对非ARC环境而言，如果在ARC环境下，引用外部变量的block会自动保存在堆中，无需copy。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">待续。。。</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>关于Size classes 和 AutoLayout 可以查考</p>
-<ol>
-<li>Size classes自悟 <a href="http://www.cocoachina.com/ios/20141217/10669.html" target="_blank" rel="external">http://www.cocoachina.com/ios/20141217/10669.html</a><br></li>
-<li>Working with Constraints in Interface Builder <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithConstraints/WorkingwithConstraints.html" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithConstraints/WorkingwithConstraints.html</a></li>
-</ol>
+<p>block的理解<a href="http://answerhuang.duapp.com/index.php/2013/09/07/objective-c-blocks-syntax/#carousel-generic-38" target="_blank" rel="external">http://answerhuang.duapp.com/index.php/2013/09/07/objective-c-blocks-syntax/#carousel-generic-38</a></p>
 </blockquote>
   
 	</div>
@@ -140,7 +134,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/AutoLayout/">AutoLayout</a>
+  <span></span> <a href="/tags/block/">block</a>
   </div>
 
 </div>
@@ -149,7 +143,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://taitanxiami.com/2015/04/04/AutoLayout用法（一）/" data-title="AutoLayout用法（一） | taitanxiami" data-tsina="null" class="share clearfix">
+	  <div data-url="http://taitanxiami.com/2015/04/19/理解block/" data-title="理解block（块） | taitanxiami" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -163,13 +157,21 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/04/19/理解block/" title="理解block（块）">
+ <a href="/2016/01/16/stackoverflow-tips/" title="stackoverflow tips">
   <strong>上一篇：</strong><br/>
   <span>
-  理解block（块）</span>
+  stackoverflow tips</span>
 </a>
 </div>
 
+
+<div class="next">
+<a href="/2015/04/04/AutoLayout用法（一）/"  title="AutoLayout用法（一）">
+ <strong>下一篇：</strong><br/> 
+ <span>AutoLayout用法（一）
+</span>
+</a>
+</div>
 
 </nav>
 
@@ -181,7 +183,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建一个带view的xib文件"><span class="toc-number">1.</span> <span class="toc-text">创建一个带view的xib文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建我们需要4个UIButton和5个UIView-辅助视图，就是button之间的间距"><span class="toc-number">2.</span> <span class="toc-text">创建我们需要4个UIButton和5个UIView(辅助视图，就是button之间的间距)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#给按钮添加约束"><span class="toc-number">3.</span> <span class="toc-text">给按钮添加约束</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#给view设置等宽，再加一个高度"><span class="toc-number">4.</span> <span class="toc-text">给view设置等宽，再加一个高度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#让他们的上下边距相等，左右边距为0"><span class="toc-number">5.</span> <span class="toc-text">让他们的上下边距相等，左右边距为0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最后在preview中查看个尺寸的效果"><span class="toc-number">6.</span> <span class="toc-text">最后在preview中查看个尺寸的效果</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#block的基本用法"><span class="toc-number">1.</span> <span class="toc-text">block的基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#默认情况下，为block所捕获的变量，是不可以在块里修改的-需要加-block"><span class="toc-number">2.</span> <span class="toc-text">默认情况下，为block所捕获的变量，是不可以在块里修改的(需要加__block)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#全局块"><span class="toc-number">3.</span> <span class="toc-text">全局块</span></a></li></ol>
  
   </div>
 
