@@ -12,18 +12,18 @@
 
     
     <meta name="description" content="UIRefreshControl 
-先看下官方的解释A UIRefreshControl object provides a standard control that can be used to initiate the refreshing of a table view’s contents.所以这种方法只适用于UITabkeView和UITableViewController">
+先看下官方的解释A UIRefreshControl object provides a standard control that can be used to initiate the refreshing of a table view’s contents.所以这种方法只适用于UITableView和UITableViewController">
 <meta property="og:type" content="article">
 <meta property="og:title" content="UIRefreshControl 实现简单的下拉刷新">
 <meta property="og:url" content="http://taitanxiami.com/2016/04/30/UIRefreshControl/index.html">
 <meta property="og:site_name" content="taitanxiami">
 <meta property="og:description" content="UIRefreshControl 
-先看下官方的解释A UIRefreshControl object provides a standard control that can be used to initiate the refreshing of a table view’s contents.所以这种方法只适用于UITabkeView和UITableViewController">
-<meta property="og:updated_time" content="2016-05-26T14:29:58.000Z">
+先看下官方的解释A UIRefreshControl object provides a standard control that can be used to initiate the refreshing of a table view’s contents.所以这种方法只适用于UITableView和UITableViewController">
+<meta property="og:updated_time" content="2016-05-27T04:40:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UIRefreshControl 实现简单的下拉刷新">
 <meta name="twitter:description" content="UIRefreshControl 
-先看下官方的解释A UIRefreshControl object provides a standard control that can be used to initiate the refreshing of a table view’s contents.所以这种方法只适用于UITabkeView和UITableViewController">
+先看下官方的解释A UIRefreshControl object provides a standard control that can be used to initiate the refreshing of a table view’s contents.所以这种方法只适用于UITableView和UITableViewController">
 
     
     <link rel="alternative" href="/atom.xml" title="taitanxiami" type="application/atom+xml">
@@ -47,7 +47,7 @@
 				<h1 class="site-name"><a href="/" title="taitanxiami">taitanxiami</a></h1>
 				<h2 class="blog-motto">taitanxiami iOS 开发</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -86,21 +86,21 @@
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-04-30T06:23:39.000Z" itemprop="datePublished"> 发表于 2016-04-30</time>
+    <time datetime="2016-04-30T06:23:39.000Z" itemprop="datePublished"> 發表於 2016-04-30</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
 			
 		
 		</div>
 		
 		<p>UIRefreshControl </p>
-<p>先看下官方的解释<br><em>A UIRefreshControl object provides a standard control that can be used to initiate the refreshing of a table view’s contents.</em><br>所以这种方法只适用于<code>UITabkeView</code>和<code>UITableViewController</code><br><a id="more"></a><br>UIRefreshControl是一个iOS中并不常用的开发控件，由于他继承至UIView,所以我们可以为其添加自定义试图来实现自定义刷新。<br>代码如下：   </p>
+<p>先看下官方的解释<br><em>A UIRefreshControl object provides a standard control that can be used to initiate the refreshing of a table view’s contents.</em><br>所以这种方法只适用于<code>UITableView</code>和<code>UITableViewController</code><br><a id="more"></a><br>UIRefreshControl是一个iOS中并不常用的开发控件，由于他继承至UIView,所以我们可以为其添加自定义试图来实现自定义刷新。<br>代码如下：   </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">UIView *refreshView = [[UIView alloc] initWithFrame:CGRectMake(0, 55, 0, 0)];</span><br><span class="line">   refreshView.backgroundColor = [UIColor lightGrayColor];</span><br><span class="line">   [self.tableView insertSubview:refreshView atIndex:0];</span><br><span class="line">   </span><br><span class="line">   [refreshView mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">       make.height.equalTo(@55);</span><br><span class="line">       make.left.and.right.and.top.equalTo(self.tableView);</span><br><span class="line">   &#125;];</span><br><span class="line">   self.refreshControl = [[UIRefreshControl alloc] init];</span><br><span class="line">   self.refreshControl.tintColor = [UIColor clearColor];</span><br><span class="line">   [self.refreshControl addTarget:self action:@selector(reloadDatas) forControlEvents:UIControlEventValueChanged];</span><br><span class="line">   </span><br><span class="line">   [refreshView addSubview:self.refreshControl];</span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">   self.refreshLoadingView = [[UIView alloc] initWithFrame:self.refreshControl.bounds];</span><br><span class="line">   self.refreshLoadingView.backgroundColor = [UIColor clearColor];;</span><br><span class="line">   [self.refreshControl addSubview:self.refreshLoadingView];</span><br><span class="line">   </span><br><span class="line">   [self.refreshLoadingView mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">       make.edges.equalTo(self.refreshControl);</span><br><span class="line">   &#125;];</span><br><span class="line">   self.tipsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 55)];</span><br><span class="line">   self.tipsLabel.font = [UIFont systemFontOfSize:14.0f];</span><br><span class="line">   self.tipsLabel.textAlignment = NSTextAlignmentCenter;</span><br><span class="line">   self.tipsLabel.textColor = [UIColor colorWithWhite:0.424 alpha:1.000];</span><br><span class="line">   </span><br><span class="line">   [self.refreshLoadingView addSubview:self.tipsLabel];</span><br><span class="line">   </span><br><span class="line">   [self.tipsLabel mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">       make.edges.equalTo(self.refreshLoadingView);</span><br><span class="line">   &#125;];</span><br></pre></td></tr></table></figure>
 <p>当滚动到tableView 的底部时，通过监听 contentoffset.y 的值，我们判断是是否加载”图文详情”,也就是触发底部刷新</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate &#123;</span><br><span class="line">    if (scrollView.contentOffset.y + scrollView.frame.size.height &gt;= scrollView.contentSize.height) &#123;</span><br><span class="line">        NSLog(@&quot;不要拽我。。。&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -159,17 +159,17 @@
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
+  <strong class="toc-title">文章目錄</strong>
  
  
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 
   
@@ -177,7 +177,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 		  
@@ -190,12 +190,8 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
-		
-			
-				<li><a href="/tags/block/" title="block">block<sup>1</sup></a></li>
-			
 		
 			
 				<li><a href="/tags/AutoLayout/" title="AutoLayout">AutoLayout<sup>1</sup></a></li>
@@ -203,6 +199,10 @@
 		
 			
 				<li><a href="/tags/下拉刷新/" title="下拉刷新">下拉刷新<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/block/" title="block">block<sup>1</sup></a></li>
 			
 		
 			
@@ -217,7 +217,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
 </aside>
@@ -456,7 +456,7 @@ var _hmt = _hmt || [];
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
