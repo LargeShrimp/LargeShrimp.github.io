@@ -4,26 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>UIRefreshControl 实现简单的下拉刷新 | taitanxiami</title>
+    <title>hit-Testing | taitanxiami</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="taitanxiami">
     
 
     
-    <meta name="description" content="UIRefreshControl 
-先看下官方的解释A UIRefreshControl object provides a standard control that can be used to initiate the refreshing of a table view’s contents.所以这种方法只适用于UITableView和UITableViewController">
+    <meta name="description" content="扩大按钮的点击区域
+在iOS事件响应则链中，当用户UIApplication 单例就会从事件队列中去取最新的事件，然后分发给能够处理该事件的对象。UIApplication 获取到Event之后，Application就纠结于到底要把这个事件传递给谁，这时候就要依靠HitTest来决定了。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UIRefreshControl 实现简单的下拉刷新">
-<meta property="og:url" content="http://taitanxiami.com/2016/04/30/UIRefreshControl/index.html">
+<meta property="og:title" content="hit-Testing">
+<meta property="og:url" content="http://taitanxiami.com/2016/06/04/hit-Testing/index.html">
 <meta property="og:site_name" content="taitanxiami">
-<meta property="og:description" content="UIRefreshControl 
-先看下官方的解释A UIRefreshControl object provides a standard control that can be used to initiate the refreshing of a table view’s contents.所以这种方法只适用于UITableView和UITableViewController">
-<meta property="og:updated_time" content="2016-05-27T04:40:34.000Z">
+<meta property="og:description" content="扩大按钮的点击区域
+在iOS事件响应则链中，当用户UIApplication 单例就会从事件队列中去取最新的事件，然后分发给能够处理该事件的对象。UIApplication 获取到Event之后，Application就纠结于到底要把这个事件传递给谁，这时候就要依靠HitTest来决定了。">
+<meta property="og:updated_time" content="2016-06-04T03:12:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UIRefreshControl 实现简单的下拉刷新">
-<meta name="twitter:description" content="UIRefreshControl 
-先看下官方的解释A UIRefreshControl object provides a standard control that can be used to initiate the refreshing of a table view’s contents.所以这种方法只适用于UITableView和UITableViewController">
+<meta name="twitter:title" content="hit-Testing">
+<meta name="twitter:description" content="扩大按钮的点击区域
+在iOS事件响应则链中，当用户UIApplication 单例就会从事件队列中去取最新的事件，然后分发给能够处理该事件的对象。UIApplication 获取到Event之后，Application就纠结于到底要把这个事件传递给谁，这时候就要依靠HitTest来决定了。">
 
     
     <link rel="alternative" href="/atom.xml" title="taitanxiami" type="application/atom+xml">
@@ -79,14 +79,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/04/30/UIRefreshControl/" title="UIRefreshControl 实现简单的下拉刷新" itemprop="url">UIRefreshControl 实现简单的下拉刷新</a>
+      <a href="/2016/06/04/hit-Testing/" title="hit-Testing" itemprop="url">hit-Testing</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-04-30T06:23:39.000Z" itemprop="datePublished"> 發表於 2016-04-30</time>
+    <time datetime="2016-06-04T03:05:17.000Z" itemprop="datePublished"> 發表於 2016-06-04</time>
     
   </p>
 </header>
@@ -99,13 +99,20 @@
 		
 		</div>
 		
-		<p>UIRefreshControl </p>
-<p>先看下官方的解释<br><em>A UIRefreshControl object provides a standard control that can be used to initiate the refreshing of a table view’s contents.</em><br>所以这种方法只适用于<code>UITableView</code>和<code>UITableViewController</code><br><a id="more"></a><br>UIRefreshControl是一个iOS中并不常用的开发控件，由于他继承至UIView,所以我们可以为其添加自定义试图来实现自定义刷新。<br>代码如下：   </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">UIView *refreshView = [[UIView alloc] initWithFrame:CGRectMake(0, 55, 0, 0)];</span><br><span class="line">   refreshView.backgroundColor = [UIColor lightGrayColor];</span><br><span class="line">   [self.tableView insertSubview:refreshView atIndex:0];</span><br><span class="line">   </span><br><span class="line">   [refreshView mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">       make.height.equalTo(@55);</span><br><span class="line">       make.left.and.right.and.top.equalTo(self.tableView);</span><br><span class="line">   &#125;];</span><br><span class="line">   self.refreshControl = [[UIRefreshControl alloc] init];</span><br><span class="line">   self.refreshControl.tintColor = [UIColor clearColor];</span><br><span class="line">   [self.refreshControl addTarget:self action:@selector(reloadDatas) forControlEvents:UIControlEventValueChanged];</span><br><span class="line">   </span><br><span class="line">   [refreshView addSubview:self.refreshControl];</span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">   self.refreshLoadingView = [[UIView alloc] initWithFrame:self.refreshControl.bounds];</span><br><span class="line">   self.refreshLoadingView.backgroundColor = [UIColor clearColor];;</span><br><span class="line">   [self.refreshControl addSubview:self.refreshLoadingView];</span><br><span class="line">   </span><br><span class="line">   [self.refreshLoadingView mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">       make.edges.equalTo(self.refreshControl);</span><br><span class="line">   &#125;];</span><br><span class="line">   self.tipsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 55)];</span><br><span class="line">   self.tipsLabel.font = [UIFont systemFontOfSize:14.0f];</span><br><span class="line">   self.tipsLabel.textAlignment = NSTextAlignmentCenter;</span><br><span class="line">   self.tipsLabel.textColor = [UIColor colorWithWhite:0.424 alpha:1.000];</span><br><span class="line">   </span><br><span class="line">   [self.refreshLoadingView addSubview:self.tipsLabel];</span><br><span class="line">   </span><br><span class="line">   [self.tipsLabel mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">       make.edges.equalTo(self.refreshLoadingView);</span><br><span class="line">   &#125;];</span><br></pre></td></tr></table></figure>
-<p>当滚动到tableView 的底部时，通过监听 contentoffset.y 的值，我们判断是是否加载”图文详情”,也就是触发底部刷新</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate &#123;</span><br><span class="line">    if (scrollView.contentOffset.y + scrollView.frame.size.height &gt;= scrollView.contentSize.height) &#123;</span><br><span class="line">        NSLog(@&quot;不要拽我。。。&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 我们用 a = scrollView.contentOffset.y, b = scrollView.frame.size.height , c = scrollView.contentSize.height</p>
-<p> 重点：我们要找个他们的三个之间的关系 a 为偏移量， b 为tableView 的高度，c 为tableView 的最大滚动区域， 他们之间有一个临界点 a + b = c 时， tableView 刚好滚到底部。所以我们可以在 a + b &gt; c的 时候触发事件去加载detailTableView.</p>
+		<p>扩大按钮的点击区域</p>
+<p>在iOS事件响应则链中，<br>当用户UIApplication 单例就会从事件队列中去取最新的事件，然后分发给能够处理该事件的对象。UIApplication 获取到Event之后，Application就纠结于到底要把这个事件传递给谁，这时候就要依靠HitTest来决定了。<a id="more"></a></p>
+<p>iOS中，hit-Testing的作用就是找出这个触摸点下面的View是什么，HitTest会检测这个点击的点是不是发生在这个View上，如果是的话，就会去遍历这个View的subviews，直到找到最小的能够处理事件的view，如果整了一圈没找到能够处理的view，则返回自身。</p>
+<p>UIView中提供两个方法用来确定hit-testing View,如下所示 </p>
+<ul>
+<li><p>(UIView <em>)hitTest:(CGPoint)point withEvent:(UIEvent </em>)event; - // recursively calls -pointInside:withEvent:. point is in the receiver’s coordinate system</p>
+</li>
+<li><p>(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event; // default returns YES if point is in bounds</p>
+</li>
+</ul>
+<p>当一个View收到hitTest消息时，会调用自己的pointInside:withEvent:方法,如果pointInside返回YES，则表明触摸事件发生在我自己内部，则会遍历自己的所有Subview去寻找最小单位(没有任何子view)的UIView，</p>
+<p>重点，hit-Test判断的区域是view的bounds，所以我们可以通过扩大view的buounds = reactA，然后在判断如果手势点在扩大后的区域内，就返回该视图即可。</p>
+<p>分析其源代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">1. 通过分类的方式给UIButton 扩展方法，</span><br><span class="line">2. 利用runtime为UIButton扩展四个属性 ，top ，left，bottom，right 。</span><br><span class="line"></span><br><span class="line">- (void) setEnlargeEdgeWithTop:(CGFloat) top right:(CGFloat) right bottom:(CGFloat) bottom left:(CGFloat) left</span><br><span class="line">&#123;</span><br><span class="line">    //赋值</span><br><span class="line">    objc_setAssociatedObject(self, &amp;topNameKey, [NSNumber numberWithFloat:top], OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">    objc_setAssociatedObject(self, &amp;rightNameKey, [NSNumber numberWithFloat:right], OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">    objc_setAssociatedObject(self, &amp;bottomNameKey, [NSNumber numberWithFloat:bottom], OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">    objc_setAssociatedObject(self, &amp;leftNameKey, [NSNumber numberWithFloat:left], OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line">3. 利用hit-Test在超出的区域内返回该视图(扩大按钮的bounds)</span><br><span class="line">- (CGRect) enlargedRect</span><br><span class="line">&#123;</span><br><span class="line">    NSNumber* topEdge = objc_getAssociatedObject(self, &amp;topNameKey);</span><br><span class="line">    NSNumber* rightEdge = objc_getAssociatedObject(self, &amp;rightNameKey);</span><br><span class="line">    NSNumber* bottomEdge = objc_getAssociatedObject(self, &amp;bottomNameKey);</span><br><span class="line">    NSNumber* leftEdge = objc_getAssociatedObject(self, &amp;leftNameKey);</span><br><span class="line">    </span><br><span class="line">    if (topEdge &amp;&amp; rightEdge &amp;&amp; bottomEdge &amp;&amp; leftEdge)</span><br><span class="line">    &#123;</span><br><span class="line">        return CGRectMake(self.bounds.origin.x - leftEdge.floatValue,</span><br><span class="line">                          self.bounds.origin.y - topEdge.floatValue,</span><br><span class="line">                          self.bounds.size.width + leftEdge.floatValue + rightEdge.floatValue,</span><br><span class="line">                          self.bounds.size.height + topEdge.floatValue + bottomEdge.floatValue);</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        return self.bounds;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//检测出发点是否在接受视图的坐标系统中</span><br><span class="line">- (UIView*) hitTest:(CGPoint) point withEvent:(UIEvent*) event</span><br><span class="line">&#123;</span><br><span class="line">    CGRect rect = [self enlargedRect];</span><br><span class="line">    if (CGRectEqualToRect(rect, self.bounds))</span><br><span class="line">    &#123;</span><br><span class="line">        return [super hitTest:point withEvent:event];</span><br><span class="line">    &#125;</span><br><span class="line">    return CGRectContainsPoint(rect, point) ? self : nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -119,7 +126,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/下拉刷新/">下拉刷新</a>
+  <span></span> <a href="/tags/hit-Testing/">hit-Testing</a>
   </div>
 
 </div>
@@ -128,7 +135,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://taitanxiami.com/2016/04/30/UIRefreshControl/" data-title="UIRefreshControl 实现简单的下拉刷新 | taitanxiami" data-tsina="null" class="share clearfix">
+	  <div data-url="http://taitanxiami.com/2016/06/04/hit-Testing/" data-title="hit-Testing | taitanxiami" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -141,19 +148,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/06/01/iOS中坐标转换/" title="iOS中坐标转换">
-  <strong>上一篇：</strong><br/>
-  <span>
-  iOS中坐标转换</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/01/16/stackoverflow-tips/"  title="stackoverflow tips">
+<a href="/2016/06/01/iOS中坐标转换/"  title="iOS中坐标转换">
  <strong>下一篇：</strong><br/> 
- <span>stackoverflow tips
+ <span>iOS中坐标转换
 </span>
 </a>
 </div>
@@ -162,7 +161,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/04/30/UIRefreshControl/" data-title="UIRefreshControl 实现简单的下拉刷新" data-url="http://taitanxiami.com/2016/04/30/UIRefreshControl/"></div>
+	<div class="ds-thread" data-thread-key="2016/06/04/hit-Testing/" data-title="hit-Testing" data-url="http://taitanxiami.com/2016/06/04/hit-Testing/"></div>
 </section>
 
 
