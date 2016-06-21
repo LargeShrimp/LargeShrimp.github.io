@@ -4,32 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>AutoLayout用法（一） | taitanxiami</title>
+    <title>UITableViewCell 动态高度计算 | taitanxiami</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="taitanxiami">
     
 
     
-    <meta name="description" content="今天介绍下用AutoLauout实现等距约束。
-####先看下效果图">
+    <meta name="description" content="平时的开发中我们打交道最多的的可能就是UITableVIew了，那今天我们就总结下其动态显示高度的多种解决方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AutoLayout用法（一）">
-<meta property="og:url" content="http://taitanxiami.com/2015/04/04/AutoLayout用法（一）/index.html">
+<meta property="og:title" content="UITableViewCell 动态高度计算">
+<meta property="og:url" content="http://taitanxiami.com/2016/06/21/UITableViewCell-动态高度计算/index.html">
 <meta property="og:site_name" content="taitanxiami">
-<meta property="og:description" content="今天介绍下用AutoLauout实现等距约束。
-####先看下效果图">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/809fd07fjw1eqtk5o2rs4j21kw0yoq5a.jpg">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/809fd07fjw1eqtky4dlo3g20q30i2q9i.gif">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/809fd07fjw1eqtm6uahhzg20uk0i14kk.gif">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/809fd07fjw1eqtmkwt700g20uk0ibqv7.gif">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/809fd07fjw1eqtmwxp5agg20xa0jk4qp.gif">
-<meta property="og:updated_time" content="2016-05-26T14:29:58.000Z">
+<meta property="og:description" content="平时的开发中我们打交道最多的的可能就是UITableVIew了，那今天我们就总结下其动态显示高度的多种解决方法">
+<meta property="og:updated_time" content="2016-06-21T15:00:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AutoLayout用法（一）">
-<meta name="twitter:description" content="今天介绍下用AutoLauout实现等距约束。
-####先看下效果图">
-<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/809fd07fjw1eqtk5o2rs4j21kw0yoq5a.jpg">
+<meta name="twitter:title" content="UITableViewCell 动态高度计算">
+<meta name="twitter:description" content="平时的开发中我们打交道最多的的可能就是UITableVIew了，那今天我们就总结下其动态显示高度的多种解决方法">
 
     
     <link rel="alternative" href="/atom.xml" title="taitanxiami" type="application/atom+xml">
@@ -85,14 +76,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/04/04/AutoLayout用法（一）/" title="AutoLayout用法（一）" itemprop="url">AutoLayout用法（一）</a>
+      <a href="/2016/06/21/UITableViewCell-动态高度计算/" title="UITableViewCell 动态高度计算" itemprop="url">UITableViewCell 动态高度计算</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2015-04-04T06:23:39.000Z" itemprop="datePublished"> 發表於 2015-04-04</time>
+    <time datetime="2016-06-21T14:21:34.000Z" itemprop="datePublished"> 發表於 2016-06-21</time>
     
   </p>
 </header>
@@ -101,27 +92,23 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建一个带view的xib文件"><span class="toc-number">1.</span> <span class="toc-text">创建一个带view的xib文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建我们需要4个UIButton和5个UIView-辅助视图，就是button之间的间距"><span class="toc-number">2.</span> <span class="toc-text">创建我们需要4个UIButton和5个UIView(辅助视图，就是button之间的间距)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#给按钮添加约束"><span class="toc-number">3.</span> <span class="toc-text">给按钮添加约束</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#给view设置等宽，再加一个高度"><span class="toc-number">4.</span> <span class="toc-text">给view设置等宽，再加一个高度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#让他们的上下边距相等，左右边距为0"><span class="toc-number">5.</span> <span class="toc-text">让他们的上下边距相等，左右边距为0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最后在preview中查看个尺寸的效果"><span class="toc-number">6.</span> <span class="toc-text">最后在preview中查看个尺寸的效果</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Method-1-iOS-8为我们提供的方法"><span class="toc-number">1.</span> <span class="toc-text">Method 1 -  iOS 8为我们提供的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Method-2-systemLayoutSizeFittingSize"><span class="toc-number">2.</span> <span class="toc-text">Method 2 - systemLayoutSizeFittingSize</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Method-3-sizeWithFont"><span class="toc-number">3.</span> <span class="toc-text">Method 3 - sizeWithFont</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Method-4-第三方库"><span class="toc-number">4.</span> <span class="toc-text">Method 4 - 第三方库</span></a></li></ol>
 		
 		</div>
 		
-		<p>今天介绍下用<code>AutoLauout</code>实现<code>等距约束</code>。</p>
-<p>####先看下效果图</p>
-<p><img src="http://ww3.sinaimg.cn/large/809fd07fjw1eqtk5o2rs4j21kw0yoq5a.jpg" alt="nihao"></p>
-<a id="more"></a>
-<h4 id="创建一个带view的xib文件"><a href="#创建一个带view的xib文件" class="headerlink" title="创建一个带view的xib文件"></a>创建一个带view的xib文件</h4><p>在Attibute inspector 设置status bar为none ,size 为freeform 这里我只考虑竖屏，所以size classes我们选择 (高度设置成100吧)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//适配所有iphone竖屏</span><br><span class="line">w:compact h:regular</span><br></pre></td></tr></table></figure>
-<h4 id="创建我们需要4个UIButton和5个UIView-辅助视图，就是button之间的间距"><a href="#创建我们需要4个UIButton和5个UIView-辅助视图，就是button之间的间距" class="headerlink" title="创建我们需要4个UIButton和5个UIView(辅助视图，就是button之间的间距)"></a>创建我们需要4个UIButton和5个UIView(辅助视图，就是button之间的间距)</h4><p>其中按钮我们是正方形w:75 ,这里需要等宽等高（宽和高都为75，定值），当屏幕变化的时候，不能改变按钮的大小，辅助view呢，为了满足按钮间的间距相等，所以五个view呢我们希望他们左右的约束为0，宽度始终相同。</p>
-<h4 id="给按钮添加约束"><a href="#给按钮添加约束" class="headerlink" title="给按钮添加约束"></a>给按钮添加约束</h4><p><img src="http://ww3.sinaimg.cn/large/809fd07fjw1eqtky4dlo3g20q30i2q9i.gif" alt="按钮等宽等高"></p>
-<h4 id="给view设置等宽，再加一个高度"><a href="#给view设置等宽，再加一个高度" class="headerlink" title="给view设置等宽，再加一个高度"></a>给view设置等宽，再加一个高度</h4><p><img src="http://ww2.sinaimg.cn/large/809fd07fjw1eqtm6uahhzg20uk0i14kk.gif" alt="给view设置等宽"></p>
-<h4 id="让他们的上下边距相等，左右边距为0"><a href="#让他们的上下边距相等，左右边距为0" class="headerlink" title="让他们的上下边距相等，左右边距为0"></a>让他们的上下边距相等，左右边距为0</h4><p><img src="http://ww3.sinaimg.cn/large/809fd07fjw1eqtmkwt700g20uk0ibqv7.gif" alt="边距相等"></p>
-<h4 id="最后在preview中查看个尺寸的效果"><a href="#最后在preview中查看个尺寸的效果" class="headerlink" title="最后在preview中查看个尺寸的效果"></a>最后在preview中查看个尺寸的效果</h4><p><img src="http://ww3.sinaimg.cn/large/809fd07fjw1eqtmwxp5agg20xa0jk4qp.gif" alt="preview"><br>7.效果出来后就把view设置成透明即可。</p>
+		<p>平时的开发中我们打交道最多的的可能就是UITableVIew了，那今天我们就总结下其动态显示高度的多种解决方法<a id="more"></a></p>
+<h4 id="Method-1-iOS-8为我们提供的方法"><a href="#Method-1-iOS-8为我们提供的方法" class="headerlink" title="Method 1 -  iOS 8为我们提供的方法"></a>Method 1 -  iOS 8为我们提供的方法</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> self.tableView.rowHeight = UITableViewAutomaticDimension;</span><br><span class="line">	</span><br><span class="line"> 或者我们可以实现返回高度的代理方法</span><br><span class="line"> 	</span><br><span class="line"> - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath &#123;</span><br><span class="line">	return UITableViewAutomaticDimension；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Method-2-systemLayoutSizeFittingSize"><a href="#Method-2-systemLayoutSizeFittingSize" class="headerlink" title="Method 2 - systemLayoutSizeFittingSize"></a>Method 2 - systemLayoutSizeFittingSize</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CGSize size = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];</span><br><span class="line">return 1  + size.height;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>关于Size classes 和 AutoLayout 可以查考</p>
-<ol>
-<li>Size classes自悟 <a href="http://www.cocoachina.com/ios/20141217/10669.html" target="_blank" rel="external">http://www.cocoachina.com/ios/20141217/10669.html</a><br></li>
-<li>Working with Constraints in Interface Builder <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithConstraints/WorkingwithConstraints.html" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithConstraints/WorkingwithConstraints.html</a></li>
-</ol>
+<p>如果说我们的UILable要多行显示的话要设置numberOfLines等于0，<br>    xib的话还要设置UIlable的preferredMaxLayoutWidth</p>
+</blockquote>
+<h4 id="Method-3-sizeWithFont"><a href="#Method-3-sizeWithFont" class="headerlink" title="Method 3 - sizeWithFont"></a>Method 3 - sizeWithFont</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (CGSize)sizeWithFont:(UIFont *)font </span><br><span class="line">	constrainedToSize:(CGSize)size 		</span><br><span class="line">	    lineBreakMode:(NSLineBreakMode)lineBreakMode</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>由于该方法在iOS7之后已经弃用我们可以用其替代方法来计算字符串的高度</p>
+</blockquote>
+<h4 id="Method-4-第三方库"><a href="#Method-4-第三方库" class="headerlink" title="Method 4 - 第三方库"></a>Method 4 - 第三方库</h4><p>大家应该熟知早前在百度知道团队的哥们的一个库UITableView-FDTemplateLayoutCell（runtime + method swimming实现）   </p>
+<blockquote>
+<p>详情请参考Demo-<a href="https://github.com/LargeShrimp/UITableViewCellDynamicHeight" target="_blank" rel="external">https://github.com/LargeShrimp/UITableViewCellDynamicHeight</a></p>
 </blockquote>
   
 	</div>
@@ -136,7 +123,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/AutoLayout/">AutoLayout</a>
+  <span></span> <a href="/tags/cell高度计算/">cell高度计算</a>
   </div>
 
 </div>
@@ -145,7 +132,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://taitanxiami.com/2015/04/04/AutoLayout用法（一）/" data-title="AutoLayout用法（一） | taitanxiami" data-tsina="null" class="share clearfix">
+	  <div data-url="http://taitanxiami.com/2016/06/21/UITableViewCell-动态高度计算/" data-title="UITableViewCell 动态高度计算 | taitanxiami" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -158,20 +145,20 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/04/19/理解block/" title="理解block（块）">
-  <strong>上一篇：</strong><br/>
-  <span>
-  理解block（块）</span>
+
+<div class="next">
+<a href="/2016/06/04/hit-Testing/"  title="hit-Testing">
+ <strong>下一篇：</strong><br/> 
+ <span>hit-Testing
+</span>
 </a>
 </div>
-
 
 </nav>
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/04/04/AutoLayout用法（一）/" data-title="AutoLayout用法（一）" data-url="http://taitanxiami.com/2015/04/04/AutoLayout用法（一）/"></div>
+	<div class="ds-thread" data-thread-key="2016/06/21/UITableViewCell-动态高度计算/" data-title="UITableViewCell 动态高度计算" data-url="http://taitanxiami.com/2016/06/21/UITableViewCell-动态高度计算/"></div>
 </section>
 
 
@@ -181,7 +168,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
  
- <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建一个带view的xib文件"><span class="toc-number">1.</span> <span class="toc-text">创建一个带view的xib文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建我们需要4个UIButton和5个UIView-辅助视图，就是button之间的间距"><span class="toc-number">2.</span> <span class="toc-text">创建我们需要4个UIButton和5个UIView(辅助视图，就是button之间的间距)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#给按钮添加约束"><span class="toc-number">3.</span> <span class="toc-text">给按钮添加约束</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#给view设置等宽，再加一个高度"><span class="toc-number">4.</span> <span class="toc-text">给view设置等宽，再加一个高度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#让他们的上下边距相等，左右边距为0"><span class="toc-number">5.</span> <span class="toc-text">让他们的上下边距相等，左右边距为0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最后在preview中查看个尺寸的效果"><span class="toc-number">6.</span> <span class="toc-text">最后在preview中查看个尺寸的效果</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Method-1-iOS-8为我们提供的方法"><span class="toc-number">1.</span> <span class="toc-text">Method 1 -  iOS 8为我们提供的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Method-2-systemLayoutSizeFittingSize"><span class="toc-number">2.</span> <span class="toc-text">Method 2 - systemLayoutSizeFittingSize</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Method-3-sizeWithFont"><span class="toc-number">3.</span> <span class="toc-text">Method 3 - sizeWithFont</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Method-4-第三方库"><span class="toc-number">4.</span> <span class="toc-text">Method 4 - 第三方库</span></a></li></ol>
  
   </div>
 
