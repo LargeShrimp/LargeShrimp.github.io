@@ -43,7 +43,7 @@
 				<h1 class="site-name"><a href="/" title="taitanxiami">taitanxiami</a></h1>
 				<h2 class="blog-motto">taitanxiami iOS 开发</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -77,6 +77,89 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2016/06/27/使用Mantle高效构建model/" title="使用Mantle高效构建model" itemprop="url">使用Mantle高效构建model</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
+		
+  <p class="article-time">
+    <time datetime="2016-06-27T08:41:28.000Z" itemprop="datePublished"> 发表于 2016-06-27</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="使用Mantle高效构建model"><a href="#使用Mantle高效构建model" class="headerlink" title="使用Mantle高效构建model"></a>使用Mantle高效构建model</h2><p>iOS 开发中，从服务器获取数据，然后解析成本地的模型是我们经常要做的事，而且重复次数特别的多，没次增加一个网路请求或增加一个模型都需要完成json–&gt;model的转换，手写<code>setValuesForKeysWithDictionary</code>:显然已更不上时代的步伐，所以我们说下如何高效构建model。</p>
+<p>熟悉OC的朋友应该知道NSObject有一个方法，叫做<code>- (void)setValuesForKeysWithDictionary:(NSDictionary&lt;NSString *, id&gt; *)keyedValues;</code><br>这个方法就是利用kvc，直接让 model 调用 <code>- (void)setValue:(nullable id)value forKeyPath:(NSString *)keyPath;</code> 方法，通过遍历传入的字典的key，对model进行赋值。<br>举个简单例子，现在我们有个Model叫做User。它的property和init方法如下。</p>
+<pre><code>@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *address;
+
+- (id)initWithDictionary:(NSDictionary *)dict
+{
+    if (self = [super init]) {
+        [self setValuesForKeysWithDictionary:dict];
+    }
+    return self;
+}
+</code></pre><p>//然后我们这样给它赋值。   </p>
+<pre><code>NSDictionary *dict = @{@&quot;name&quot;:@&quot;zql&quot;, @&quot;address&quot;:@&quot;beijing&quot;};
+User *user = [[User alloc] initWithDictionary:dict];
+NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
+</code></pre><p>打印出来的结果就是 </p>
+<pre><code>User name is zql, address is beijing
+</code></pre><p>但是，这里有可能会出现几个问题。<br>如果 Dictionary 里的某一个 key 的名字和Model里的property的名字不匹配，就会造成NSUnknownKeyException 然后直接崩溃。<br>没法进行类型判断，如果你的dictionary里某个key对应的值和你的model里相同的key对应的值得类型不一致，他没有办法自动转换，而且完全不会报错。<br>当然，你可能会说，第一个问题，可以通过实现<br><code>- (void)setValue:(id)value forUndefinedKey:(NSString *)key</code>  这个方法来进行检测和修复。<br>但问题是，如果大量的key不匹配的话，你又回到了原来的问题，需要写大量重复的代码。</p>
+<p>这样分析下来，直接使用 setValuesForKeysWithDictionary 并不能实现我们的需求。<br>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2016/06/27/使用Mantle高效构建model/#more">Read More</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/iOS/">iOS</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Mantle/">Mantle</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/06/27/使用Mantle高效构建model/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/06/27/使用Mantle高效构建model/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2016/06/21/UITableViewCell-动态高度计算/" title="UITableViewCell 动态高度计算" itemprop="url">UITableViewCell 动态高度计算</a>
   </h1>
   <p class="article-author">By
@@ -84,7 +167,7 @@
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-06-21T14:21:34.000Z" itemprop="datePublished"> 發表於 2016-06-21</time>
+    <time datetime="2016-06-21T14:21:34.000Z" itemprop="datePublished"> 发表于 2016-06-21</time>
     
   </p>
 </header>
@@ -148,7 +231,7 @@
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-06-04T03:05:17.000Z" itemprop="datePublished"> 發表於 2016-06-04</time>
+    <time datetime="2016-06-04T03:05:17.000Z" itemprop="datePublished"> 发表于 2016-06-04</time>
     
   </p>
 </header>
@@ -213,7 +296,7 @@
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-06-01T14:41:57.000Z" itemprop="datePublished"> 發表於 2016-06-01</time>
+    <time datetime="2016-06-01T14:41:57.000Z" itemprop="datePublished"> 发表于 2016-06-01</time>
     
   </p>
 </header>
@@ -277,7 +360,7 @@
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-04-30T06:23:39.000Z" itemprop="datePublished"> 發表於 2016-04-30</time>
+    <time datetime="2016-04-30T06:23:39.000Z" itemprop="datePublished"> 发表于 2016-04-30</time>
     
   </p>
 </header>
@@ -342,7 +425,7 @@
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-01-16T04:55:27.000Z" itemprop="datePublished"> 發表於 2016-01-16</time>
+    <time datetime="2016-01-16T04:55:27.000Z" itemprop="datePublished"> 发表于 2016-01-16</time>
     
   </p>
 </header>
@@ -413,7 +496,7 @@
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2015-04-19T15:42:47.000Z" itemprop="datePublished"> 發表於 2015-04-19</time>
+    <time datetime="2015-04-19T15:42:47.000Z" itemprop="datePublished"> 发表于 2015-04-19</time>
     
   </p>
 </header>
@@ -479,7 +562,7 @@
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2015-04-04T06:23:39.000Z" itemprop="datePublished"> 發表於 2015-04-04</time>
+    <time datetime="2015-04-04T06:23:39.000Z" itemprop="datePublished"> 发表于 2015-04-04</time>
     
   </p>
 </header>
@@ -534,10 +617,10 @@
 
 
 </div>
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
@@ -545,11 +628,11 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">分类</p>
 		<ul>
 		
 		  
-			<li><a href="/categories/iOS/" title="iOS">iOS<sup>7</sup></a></li>
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>8</sup></a></li>
 		  
 		
 		</ul>
@@ -558,19 +641,23 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
-		
-			
-				<li><a href="/tags/AutoLayout/" title="AutoLayout">AutoLayout<sup>1</sup></a></li>
-			
 		
 			
 				<li><a href="/tags/下拉刷新/" title="下拉刷新">下拉刷新<sup>1</sup></a></li>
 			
 		
 			
+				<li><a href="/tags/AutoLayout/" title="AutoLayout">AutoLayout<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/cell高度计算/" title="cell高度计算">cell高度计算<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hit-Testing/" title="hit-Testing">hit-Testing<sup>1</sup></a></li>
 			
 		
 			
@@ -582,11 +669,11 @@
 			
 		
 			
-				<li><a href="/tags/hit-Testing/" title="hit-Testing">hit-Testing<sup>1</sup></a></li>
+				<li><a href="/tags/block/" title="block">block<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/block/" title="block">block<sup>1</sup></a></li>
+				<li><a href="/tags/Mantle/" title="Mantle">Mantle<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -597,7 +684,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -747,7 +834,7 @@ var _hmt = _hmt || [];
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
