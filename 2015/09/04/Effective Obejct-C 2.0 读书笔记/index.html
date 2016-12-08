@@ -11,37 +11,37 @@
     
 
     
-    <meta name="description" content="记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。
+    <meta name="description" content="记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。本笔记目的是强化自己的理解，便于以后能快速查找。
 
 oc 是有smalltall 演化而来，动态绑定
 
 理解 c 内存模型
  对象都在堆上，手动管理
 
-在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件中引入那些类的头文件。这样做可以尽量降低类之间的">
+在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Effective Objective-C 2.0 读书笔记">
 <meta property="og:url" content="http://taitanxiami.com/2015/09/04/Effective Obejct-C 2.0 读书笔记/index.html">
 <meta property="og:site_name" content="taitanxiami">
-<meta property="og:description" content="记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。
+<meta property="og:description" content="记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。本笔记目的是强化自己的理解，便于以后能快速查找。
 
 oc 是有smalltall 演化而来，动态绑定
 
 理解 c 内存模型
  对象都在堆上，手动管理
 
-在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件中引入那些类的头文件。这样做可以尽量降低类之间的">
-<meta property="og:updated_time" content="2016-12-08T16:08:41.000Z">
+在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件">
+<meta property="og:updated_time" content="2016-12-08T16:12:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Effective Objective-C 2.0 读书笔记">
-<meta name="twitter:description" content="记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。
+<meta name="twitter:description" content="记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。本笔记目的是强化自己的理解，便于以后能快速查找。
 
 oc 是有smalltall 演化而来，动态绑定
 
 理解 c 内存模型
  对象都在堆上，手动管理
 
-在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件中引入那些类的头文件。这样做可以尽量降低类之间的">
+在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件">
 
     
     <link rel="alternative" href="/atom.xml" title="taitanxiami" type="application/atom+xml">
@@ -65,7 +65,7 @@ oc 是有smalltall 演化而来，动态绑定
 				<h1 class="site-name"><a href="/" title="taitanxiami">taitanxiami</a></h1>
 				<h2 class="blog-motto">taitanxiami iOS 开发</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -81,7 +81,7 @@ oc 是有smalltall 演化而来，动态绑定
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:taitanxiami.com">
 					</form>
 					
@@ -104,20 +104,20 @@ oc 是有smalltall 演化而来，动态绑定
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2015-09-04T06:23:39.000Z" itemprop="datePublished"> 發表於 2015-09-04</time>
+    <time datetime="2015-09-04T06:23:39.000Z" itemprop="datePublished"> Published 2015-09-04</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			
 		
 		</div>
 		
-		<p>记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。</p>
+		<p>记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。本笔记目的是强化自己的理解，便于以后能快速查找。</p>
 <ol>
 <li><p>oc 是有smalltall 演化而来，动态绑定</p>
 </li>
@@ -228,17 +228,17 @@ oc 是有smalltall 演化而来，动态绑定
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目錄</strong>
+  <strong class="toc-title">Contents</strong>
  
  
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 
   
@@ -246,7 +246,7 @@ oc 是有smalltall 演化而来，动态绑定
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -263,7 +263,7 @@ oc 是有smalltall 演化而来，动态绑定
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -279,11 +279,11 @@ oc 是有smalltall 演化而来，动态绑定
 			
 		
 			
-				<li><a href="/tags/hit-Testing/" title="hit-Testing">hit-Testing<sup>1</sup></a></li>
+				<li><a href="/tags/cell高度计算/" title="cell高度计算">cell高度计算<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/cell高度计算/" title="cell高度计算">cell高度计算<sup>1</sup></a></li>
+				<li><a href="/tags/hit-Testing/" title="hit-Testing">hit-Testing<sup>1</sup></a></li>
 			
 		
 			
@@ -310,7 +310,7 @@ oc 是有smalltall 演化而来，动态绑定
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -549,7 +549,7 @@ var _hmt = _hmt || [];
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
