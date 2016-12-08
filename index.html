@@ -43,7 +43,7 @@
 				<h1 class="site-name"><a href="/" title="taitanxiami">taitanxiami</a></h1>
 				<h2 class="blog-motto">taitanxiami iOS 开发</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -59,7 +59,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:taitanxiami.com">
 					</form>
 					
@@ -84,7 +84,7 @@
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-06-27T08:41:28.000Z" itemprop="datePublished"> 发表于 2016-06-27</time>
+    <time datetime="2016-06-27T08:41:28.000Z" itemprop="datePublished"> Published 2016-06-27</time>
     
   </p>
 </header>
@@ -167,7 +167,7 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-06-21T14:21:34.000Z" itemprop="datePublished"> 发表于 2016-06-21</time>
+    <time datetime="2016-06-21T14:21:34.000Z" itemprop="datePublished"> Published 2016-06-21</time>
     
   </p>
 </header>
@@ -231,7 +231,7 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-06-04T03:05:17.000Z" itemprop="datePublished"> 发表于 2016-06-04</time>
+    <time datetime="2016-06-04T03:05:17.000Z" itemprop="datePublished"> Published 2016-06-04</time>
     
   </p>
 </header>
@@ -296,7 +296,7 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-06-01T14:41:57.000Z" itemprop="datePublished"> 发表于 2016-06-01</time>
+    <time datetime="2016-06-01T14:41:57.000Z" itemprop="datePublished"> Published 2016-06-01</time>
     
   </p>
 </header>
@@ -360,7 +360,7 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-04-30T06:23:39.000Z" itemprop="datePublished"> 发表于 2016-04-30</time>
+    <time datetime="2016-04-30T06:23:39.000Z" itemprop="datePublished"> Published 2016-04-30</time>
     
   </p>
 </header>
@@ -425,7 +425,7 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-01-16T04:55:27.000Z" itemprop="datePublished"> 发表于 2016-01-16</time>
+    <time datetime="2016-01-16T04:55:27.000Z" itemprop="datePublished"> Published 2016-01-16</time>
     
   </p>
 </header>
@@ -496,7 +496,7 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2015-09-04T06:23:39.000Z" itemprop="datePublished"> 发表于 2015-09-04</time>
+    <time datetime="2015-09-04T06:23:39.000Z" itemprop="datePublished"> Published 2015-09-04</time>
     
   </p>
 </header>
@@ -515,14 +515,42 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 </li>
 <li><p>用枚举表示状态，选项和状态码<br>枚举和switch 使用时不需要default 分支</p>
 </li>
-</ol>
-<ol>
 <li><p>理解属性的概念</p>
 <p> @dynamic  编译器不会为这个属性自动生成存取方法或实例变量（_firstName）</p>
 <p> readonly  若某属性仅可于对象内部修改，则在“class-continuation分类”中将其由readonly属性扩展为readwrite属性<br> 当我们声明一个 readonly 的属性，外部可能会通过 KVC 修改该属性值。<br> 为了避免 KVC 修改属性值，须将定义属性所在类的类方法 + (BOOL)accessInstanceVariablesDirectly 重写，使其返回 NO.</p>
 <p> assign  基本数据类型<br> strong 拥有关系 保留新值，释放旧值，并把新值设置上去<br> weak 非拥有关系，既不保留新值，也不释放旧值（同assign）,当所指对象销毁时，自动至为nil<br> copy 同strong 类似，然后并不会保留新值，而是copy 一份</p>
 </li>
+<li><p>在对象内部尽量直接访问实例变量、</p>
+<ul>
+<li>直接访问不会触发kvo，不会触发存取方法</li>
+<li>懒加载的时候要使用属性访问</li>
+<li>dealloc的时候使用直接访问</li>
+</ul>
+</li>
+<li><p>以“类族模式”隐藏实现细节</p>
+<ul>
+<li>系统框架中经常使用类族</li>
+<li>类族模式可以把实现细节隐藏在一套简单的公共接口后面</li>
+</ul>
+</li>
+<li><p>在既有类中使用<em>关联对象</em>存放自定义数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">设置关联对象</span><br><span class="line">void  objc_setAssociatedObject (id object, void * key, id value, objc_associationPolicy policy)</span><br><span class="line">获取关联对象的值</span><br><span class="line">id objc_getAssociatedObejct(id obejct, void *key)</span><br><span class="line">移除指定对象的全部关联对象</span><br><span class="line">void objc_removeAssociatedObejcts(id obejct)</span><br></pre></td></tr></table></figure>
+<p>举个栗子</p>
+</li>
 </ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">	</span><br><span class="line">static void *EOCMyAlertViewKey = @&quot;EOCMyAlertViewKey&quot;;</span><br><span class="line">	</span><br><span class="line">- (void)askUserAQuestion &#123;</span><br><span class="line"></span><br><span class="line"> 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@&quot;Question&quot;</span><br><span class="line">                                                          message:@&quot;What do you want to do?&quot;</span><br><span class="line">                                                         delegate:self</span><br><span class="line">                                                cancelButtonTitle:@&quot;取消&quot;</span><br><span class="line">                                                otherButtonTitles:@&quot;继续&quot;, nil];</span><br><span class="line">	void (^block)(NSInteger buttonIdx) = ^(NSInteger buttonIdx) &#123;</span><br><span class="line">    </span><br><span class="line">        if (buttonIdx == 0) &#123;</span><br><span class="line">            // cancle</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            //sure</span><br><span class="line">        &#125;</span><br><span class="line">	 &#125;;</span><br><span class="line">    </span><br><span class="line">	objc_setAssociatedObject(alertView, EOCMyAlertViewKey, block, OBJC_ASSOCIATION_COPY);</span><br><span class="line">	    </span><br><span class="line">    [alertView show];</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">- (void)alertView:(UIAlertView *)alertView</span><br><span class="line">clickedButtonAtIndex:(NSInteger)buttonIndex &#123;</span><br><span class="line">    </span><br><span class="line">   void (^block)(NSInteger) = objc_getAssociatedObject(alertView, EOCMyAlertViewKey);</span><br><span class="line">   block(buttonIndex);    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以通过关联对象把两个对象关联起来</li>
+<li>定义关联对象的时候可指定内存管理语义</li>
+<li>只有在其他办法不可行的时候才选用关联对象</li>
+</ul>
+<ol>
+<li><p>用“方法调配技术”调试“黑盒方法” （ method swizzling ）</p>
+<p>举个🌰</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIViewController+Tracking.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">@implementation UIViewController (Tracking)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">		    </span><br><span class="line">static dispatch_once_t onceToken;</span><br><span class="line">dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">    </span><br><span class="line">    Class class = [self  class];</span><br><span class="line">    SEL originSelector = @selector(viewWillAppear:);</span><br><span class="line">    SEL swizzledSelector  = @selector(rh_viewWillAppear:);</span><br><span class="line">    </span><br><span class="line">    Method originalMenthod = class_getInstanceMethod(class, originSelector);</span><br><span class="line">    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);</span><br><span class="line">    </span><br><span class="line">    //添加新方法</span><br><span class="line">    BOOL didAddMethod = class_addMethod(class, originSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    //如果已经添加，就方法替换</span><br><span class="line">    if (didAddMethod) &#123;</span><br><span class="line">        //Replaces the implementation of a method for a given class.</span><br><span class="line">        class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMenthod), method_getTypeEncoding(originalMenthod));</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        method_exchangeImplementations(originalMenthod, swizzledMethod);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">&#125;			</span><br><span class="line">- (void)rh_viewWillAppear:(BOOL)animated &#123;</span><br><span class="line">	[self rh_viewWillAppear:animated];</span><br><span class="line">	NSLog(@&quot;viewWillAppear: %@&quot;, self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>在运行期可以向类中新增或者替换选择子所对应的方法实现</em></p>
 
         
         
@@ -579,7 +607,7 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2015-04-19T15:42:47.000Z" itemprop="datePublished"> 发表于 2015-04-19</time>
+    <time datetime="2015-04-19T15:42:47.000Z" itemprop="datePublished"> Published 2015-04-19</time>
     
   </p>
 </header>
@@ -645,7 +673,7 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2015-04-04T06:23:39.000Z" itemprop="datePublished"> 发表于 2015-04-04</time>
+    <time datetime="2015-04-04T06:23:39.000Z" itemprop="datePublished"> Published 2015-04-04</time>
     
   </p>
 </header>
@@ -700,10 +728,10 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 
 
 </div>
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 
   
@@ -711,7 +739,7 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -728,11 +756,15 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
 				<li><a href="/tags/AutoLayout/" title="AutoLayout">AutoLayout<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/读书/" title="读书">读书<sup>1</sup></a></li>
 			
 		
 			
@@ -744,11 +776,11 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 			
 		
 			
-				<li><a href="/tags/坐标转换/" title="坐标转换">坐标转换<sup>1</sup></a></li>
+				<li><a href="/tags/hit-Testing/" title="hit-Testing">hit-Testing<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hit-Testing/" title="hit-Testing">hit-Testing<sup>1</sup></a></li>
+				<li><a href="/tags/坐标转换/" title="坐标转换">坐标转换<sup>1</sup></a></li>
 			
 		
 			
@@ -756,15 +788,11 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 			
 		
 			
-				<li><a href="/tags/block/" title="block">block<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Mantle/" title="Mantle">Mantle<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/读书/" title="读书">读书<sup>1</sup></a></li>
+				<li><a href="/tags/block/" title="block">block<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -775,7 +803,7 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -925,7 +953,7 @@ var _hmt = _hmt || [];
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
