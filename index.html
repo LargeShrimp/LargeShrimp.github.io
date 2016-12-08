@@ -489,6 +489,89 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/09/04/Effective Obejct-C 2.0 读书笔记/" title="Effective Objective-C 2.0 读书笔记" itemprop="url">Effective Objective-C 2.0 读书笔记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-04T06:23:39.000Z" itemprop="datePublished"> 发表于 2015-09-04</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <ol>
+<li><p>oc 是有smalltall 演化而来，动态绑定</p>
+</li>
+<li><p>理解 c 内存模型</p>
+<p> 对象都在堆上，手动管理</p>
+</li>
+<li><p>在类的头文件中尽量少的引入其他头文件（@class）<br>除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件中引入那些类的头文件。这样做可以尽量降低类之间的耦合（coupling）.<br>有时无法使用向前声明，比如要声明某个类遵循一项协议。这种情况下，应尽量把“该类遵循某协议”的这条声明移至“class-continuation分类中”。如果不行的话，就把协议单独放在一个头文件中，然后将其引入。<br>3.多使用字面量常量 ，字面量常量对象都是不可变得，使用可使用mutablecopy</p>
+</li>
+<li><p>多用类型常量（带类型信息），少用预处理命令</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#define ANIAMTION_DURATION  0.3   </span><br><span class="line">static const NSTimeInterval kAnimationDuration  = 0.3   </span><br><span class="line">(只在编译单元可见)   </span><br><span class="line">extern NSString * const EOCStringConstant;  （公开）</span><br><span class="line">在实现文件中  NSString * const EOCStringConstant = @“hello”;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用枚举表示状态，选项和状态码<br>枚举和switch 使用时不需要default 分支</p>
+</li>
+</ol>
+<ol>
+<li><p>理解属性的概念</p>
+<p> @dynamic  编译器不会为这个属性自动生成存取方法或实例变量（_firstName）</p>
+<p> readonly  若某属性仅可于对象内部修改，则在“class-continuation分类”中将其由readonly属性扩展为readwrite属性<br> 当我们声明一个 readonly 的属性，外部可能会通过 KVC 修改该属性值。<br> 为了避免 KVC 修改属性值，须将定义属性所在类的类方法 + (BOOL)accessInstanceVariablesDirectly 重写，使其返回 NO.</p>
+<p> assign  基本数据类型<br> strong 拥有关系 保留新值，释放旧值，并把新值设置上去<br> weak 非拥有关系，既不保留新值，也不释放旧值（同assign）,当所指对象销毁时，自动至为nil<br> copy 同strong 类似，然后并不会保留新值，而是copy 一份</p>
+</li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/读书/">读书</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/读书/">读书</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/09/04/Effective Obejct-C 2.0 读书笔记/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/09/04/Effective Obejct-C 2.0 读书笔记/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/04/19/理解block/" title="理解block（块）" itemprop="url">理解block（块）</a>
   </h1>
   <p class="article-author">By
@@ -635,6 +718,10 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 			<li><a href="/categories/iOS/" title="iOS">iOS<sup>8</sup></a></li>
 		  
 		
+		  
+			<li><a href="/categories/读书/" title="读书">读书<sup>1</sup></a></li>
+		  
+		
 		</ul>
 </div>
 
@@ -645,11 +732,11 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/下拉刷新/" title="下拉刷新">下拉刷新<sup>1</sup></a></li>
+				<li><a href="/tags/AutoLayout/" title="AutoLayout">AutoLayout<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/AutoLayout/" title="AutoLayout">AutoLayout<sup>1</sup></a></li>
+				<li><a href="/tags/下拉刷新/" title="下拉刷新">下拉刷新<sup>1</sup></a></li>
 			
 		
 			
@@ -657,11 +744,11 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 			
 		
 			
-				<li><a href="/tags/hit-Testing/" title="hit-Testing">hit-Testing<sup>1</sup></a></li>
+				<li><a href="/tags/坐标转换/" title="坐标转换">坐标转换<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/坐标转换/" title="坐标转换">坐标转换<sup>1</sup></a></li>
+				<li><a href="/tags/hit-Testing/" title="hit-Testing">hit-Testing<sup>1</sup></a></li>
 			
 		
 			
@@ -674,6 +761,10 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 		
 			
 				<li><a href="/tags/Mantle/" title="Mantle">Mantle<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/读书/" title="读书">读书<sup>1</sup></a></li>
 			
 		
 		</ul>

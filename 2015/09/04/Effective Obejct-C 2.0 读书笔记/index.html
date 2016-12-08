@@ -4,26 +4,38 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>hit-Testing | taitanxiami</title>
+    <title>Effective Objective-C 2.0 读书笔记 | taitanxiami</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="taitanxiami">
     
 
     
-    <meta name="description" content="扩大按钮的点击区域
-在iOS事件响应则链中，当用户UIApplication 单例就会从事件队列中去取最新的事件，然后分发给能够处理该事件的对象。UIApplication 获取到Event之后，Application就纠结于到底要把这个事件传递给谁，这时候就要依靠HitTest来决定了。">
+    <meta name="description" content="oc 是有smalltall 演化而来，动态绑定
+
+理解 c 内存模型
+ 对象都在堆上，手动管理
+
+在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件中引入那些类的头文件。这样做可以尽量降低类之间的耦合（coupling）.有时无法使用向前声明，比如要声明某个类遵循一项协议。这种情况下，应尽量">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hit-Testing">
-<meta property="og:url" content="http://taitanxiami.com/2016/06/04/hit-Testing/index.html">
+<meta property="og:title" content="Effective Objective-C 2.0 读书笔记">
+<meta property="og:url" content="http://taitanxiami.com/2015/09/04/Effective Obejct-C 2.0 读书笔记/index.html">
 <meta property="og:site_name" content="taitanxiami">
-<meta property="og:description" content="扩大按钮的点击区域
-在iOS事件响应则链中，当用户UIApplication 单例就会从事件队列中去取最新的事件，然后分发给能够处理该事件的对象。UIApplication 获取到Event之后，Application就纠结于到底要把这个事件传递给谁，这时候就要依靠HitTest来决定了。">
-<meta property="og:updated_time" content="2016-06-04T03:12:29.000Z">
+<meta property="og:description" content="oc 是有smalltall 演化而来，动态绑定
+
+理解 c 内存模型
+ 对象都在堆上，手动管理
+
+在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件中引入那些类的头文件。这样做可以尽量降低类之间的耦合（coupling）.有时无法使用向前声明，比如要声明某个类遵循一项协议。这种情况下，应尽量">
+<meta property="og:updated_time" content="2016-12-08T14:22:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hit-Testing">
-<meta name="twitter:description" content="扩大按钮的点击区域
-在iOS事件响应则链中，当用户UIApplication 单例就会从事件队列中去取最新的事件，然后分发给能够处理该事件的对象。UIApplication 获取到Event之后，Application就纠结于到底要把这个事件传递给谁，这时候就要依靠HitTest来决定了。">
+<meta name="twitter:title" content="Effective Objective-C 2.0 读书笔记">
+<meta name="twitter:description" content="oc 是有smalltall 演化而来，动态绑定
+
+理解 c 内存模型
+ 对象都在堆上，手动管理
+
+在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件中引入那些类的头文件。这样做可以尽量降低类之间的耦合（coupling）.有时无法使用向前声明，比如要声明某个类遵循一项协议。这种情况下，应尽量">
 
     
     <link rel="alternative" href="/atom.xml" title="taitanxiami" type="application/atom+xml">
@@ -79,14 +91,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/06/04/hit-Testing/" title="hit-Testing" itemprop="url">hit-Testing</a>
+      <a href="/2015/09/04/Effective Obejct-C 2.0 读书笔记/" title="Effective Objective-C 2.0 读书笔记" itemprop="url">Effective Objective-C 2.0 读书笔记</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-06-04T03:05:17.000Z" itemprop="datePublished"> 发表于 2016-06-04</time>
+    <time datetime="2015-09-04T06:23:39.000Z" itemprop="datePublished"> 发表于 2015-09-04</time>
     
   </p>
 </header>
@@ -99,20 +111,27 @@
 		
 		</div>
 		
-		<p>扩大按钮的点击区域</p>
-<p>在iOS事件响应则链中，<br>当用户UIApplication 单例就会从事件队列中去取最新的事件，然后分发给能够处理该事件的对象。UIApplication 获取到Event之后，Application就纠结于到底要把这个事件传递给谁，这时候就要依靠HitTest来决定了。<a id="more"></a></p>
-<p>iOS中，hit-Testing的作用就是找出这个触摸点下面的View是什么，HitTest会检测这个点击的点是不是发生在这个View上，如果是的话，就会去遍历这个View的subviews，直到找到最小的能够处理事件的view，如果整了一圈没找到能够处理的view，则返回自身。</p>
-<p>UIView中提供两个方法用来确定hit-testing View,如下所示 </p>
-<ul>
-<li><p>(UIView <em>)hitTest:(CGPoint)point withEvent:(UIEvent </em>)event; - // recursively calls -pointInside:withEvent:. point is in the receiver’s coordinate system</p>
+		<ol>
+<li><p>oc 是有smalltall 演化而来，动态绑定</p>
 </li>
-<li><p>(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event; // default returns YES if point is in bounds</p>
+<li><p>理解 c 内存模型</p>
+<p> 对象都在堆上，手动管理</p>
 </li>
-</ul>
-<p>当一个View收到hitTest消息时，会调用自己的pointInside:withEvent:方法,如果pointInside返回YES，则表明触摸事件发生在我自己内部，则会遍历自己的所有Subview去寻找最小单位(没有任何子view)的UIView，</p>
-<p>重点，hit-Test判断的区域是view的bounds，所以我们可以通过扩大view的buounds = reactA，然后在判断如果手势点在扩大后的区域内，就返回该视图即可。</p>
-<p>分析其源代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">1. 通过分类的方式给UIButton 扩展方法，</span><br><span class="line">2. 利用runtime为UIButton扩展四个属性 ，top ，left，bottom，right 。</span><br><span class="line"></span><br><span class="line">- (void) setEnlargeEdgeWithTop:(CGFloat) top right:(CGFloat) right bottom:(CGFloat) bottom left:(CGFloat) left</span><br><span class="line">&#123;</span><br><span class="line">    //赋值</span><br><span class="line">    objc_setAssociatedObject(self, &amp;topNameKey, [NSNumber numberWithFloat:top], OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">    objc_setAssociatedObject(self, &amp;rightNameKey, [NSNumber numberWithFloat:right], OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">    objc_setAssociatedObject(self, &amp;bottomNameKey, [NSNumber numberWithFloat:bottom], OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">    objc_setAssociatedObject(self, &amp;leftNameKey, [NSNumber numberWithFloat:left], OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line">3. 利用hit-Test在超出的区域内返回该视图(扩大按钮的bounds)</span><br><span class="line">- (CGRect) enlargedRect</span><br><span class="line">&#123;</span><br><span class="line">    NSNumber* topEdge = objc_getAssociatedObject(self, &amp;topNameKey);</span><br><span class="line">    NSNumber* rightEdge = objc_getAssociatedObject(self, &amp;rightNameKey);</span><br><span class="line">    NSNumber* bottomEdge = objc_getAssociatedObject(self, &amp;bottomNameKey);</span><br><span class="line">    NSNumber* leftEdge = objc_getAssociatedObject(self, &amp;leftNameKey);</span><br><span class="line">    </span><br><span class="line">    if (topEdge &amp;&amp; rightEdge &amp;&amp; bottomEdge &amp;&amp; leftEdge)</span><br><span class="line">    &#123;</span><br><span class="line">        return CGRectMake(self.bounds.origin.x - leftEdge.floatValue,</span><br><span class="line">                          self.bounds.origin.y - topEdge.floatValue,</span><br><span class="line">                          self.bounds.size.width + leftEdge.floatValue + rightEdge.floatValue,</span><br><span class="line">                          self.bounds.size.height + topEdge.floatValue + bottomEdge.floatValue);</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        return self.bounds;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//检测出发点是否在接受视图的坐标系统中</span><br><span class="line">- (UIView*) hitTest:(CGPoint) point withEvent:(UIEvent*) event</span><br><span class="line">&#123;</span><br><span class="line">    CGRect rect = [self enlargedRect];</span><br><span class="line">    if (CGRectEqualToRect(rect, self.bounds))</span><br><span class="line">    &#123;</span><br><span class="line">        return [super hitTest:point withEvent:event];</span><br><span class="line">    &#125;</span><br><span class="line">    return CGRectContainsPoint(rect, point) ? self : nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>在类的头文件中尽量少的引入其他头文件（@class）<br>除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件中引入那些类的头文件。这样做可以尽量降低类之间的耦合（coupling）.<br>有时无法使用向前声明，比如要声明某个类遵循一项协议。这种情况下，应尽量把“该类遵循某协议”的这条声明移至“class-continuation分类中”。如果不行的话，就把协议单独放在一个头文件中，然后将其引入。<br>3.多使用字面量常量 ，字面量常量对象都是不可变得，使用可使用mutablecopy</p>
+</li>
+<li><p>多用类型常量（带类型信息），少用预处理命令</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#define ANIAMTION_DURATION  0.3   </span><br><span class="line">static const NSTimeInterval kAnimationDuration  = 0.3   </span><br><span class="line">(只在编译单元可见)   </span><br><span class="line">extern NSString * const EOCStringConstant;  （公开）</span><br><span class="line">在实现文件中  NSString * const EOCStringConstant = @“hello”;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用枚举表示状态，选项和状态码<br>枚举和switch 使用时不需要default 分支</p>
+</li>
+</ol>
+<ol>
+<li><p>理解属性的概念</p>
+<p> @dynamic  编译器不会为这个属性自动生成存取方法或实例变量（_firstName）</p>
+<p> readonly  若某属性仅可于对象内部修改，则在“class-continuation分类”中将其由readonly属性扩展为readwrite属性<br> 当我们声明一个 readonly 的属性，外部可能会通过 KVC 修改该属性值。<br> 为了避免 KVC 修改属性值，须将定义属性所在类的类方法 + (BOOL)accessInstanceVariablesDirectly 重写，使其返回 NO.</p>
+<p> assign  基本数据类型<br> strong 拥有关系 保留新值，释放旧值，并把新值设置上去<br> weak 非拥有关系，既不保留新值，也不释放旧值（同assign）,当所指对象销毁时，自动至为nil<br> copy 同strong 类似，然后并不会保留新值，而是copy 一份</p>
+</li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -120,13 +139,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  <a class="article-category-link" href="/categories/读书/">读书</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/hit-Testing/">hit-Testing</a>
+  <span></span> <a href="/tags/读书/">读书</a>
   </div>
 
 </div>
@@ -135,7 +154,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://taitanxiami.com/2016/06/04/hit-Testing/" data-title="hit-Testing | taitanxiami" data-tsina="null" class="share clearfix">
+	  <div data-url="http://taitanxiami.com/2015/09/04/Effective Obejct-C 2.0 读书笔记/" data-title="Effective Objective-C 2.0 读书笔记 | taitanxiami" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -149,18 +168,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/06/21/UITableViewCell-动态高度计算/" title="UITableViewCell 动态高度计算">
+ <a href="/2016/01/16/stackoverflow-tips/" title="stackoverflow tips">
   <strong>上一篇：</strong><br/>
   <span>
-  UITableViewCell 动态高度计算</span>
+  stackoverflow tips</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/06/01/iOS中坐标转换/"  title="iOS中坐标转换">
+<a href="/2015/04/19/理解block/"  title="理解block（块）">
  <strong>下一篇：</strong><br/> 
- <span>iOS中坐标转换
+ <span>理解block（块）
 </span>
 </a>
 </div>
@@ -169,7 +188,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/06/04/hit-Testing/" data-title="hit-Testing" data-url="http://taitanxiami.com/2016/06/04/hit-Testing/"></div>
+	<div class="ds-thread" data-thread-key="2015/09/04/Effective Obejct-C 2.0 读书笔记/" data-title="Effective Objective-C 2.0 读书笔记" data-url="http://taitanxiami.com/2015/09/04/Effective Obejct-C 2.0 读书笔记/"></div>
 </section>
 
 
