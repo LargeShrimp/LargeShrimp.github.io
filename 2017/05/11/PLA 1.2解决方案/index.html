@@ -4,25 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>iOS中坐标转换 | taitanxiami</title>
+    <title>PLA 1.2 App审核解决方案 | taitanxiami</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="taitanxiami">
     
 
     
-    <meta name="description" content="我们在开发中经常用到坐标系统的转换，比如获取某个cell相对与self.view的坐标，获取scrollview上某个item的坐标。iOS系统中提供给我们用于坐标系统转换的方法如下">
+    <meta name="description" content="PLA 1.2 App审核解决方案最近提交App的时候遇到PLA 1.2 的问题，来来回回，浪费了不少时间，这里简单描述下经过，希望对大家有所帮助">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS中坐标转换">
-<meta property="og:url" content="http://taitanxiami.com/2016/06/01/iOS中坐标转换/index.html">
+<meta property="og:title" content="PLA 1.2 App审核解决方案">
+<meta property="og:url" content="http://taitanxiami.com/2017/05/11/PLA 1.2解决方案/index.html">
 <meta property="og:site_name" content="taitanxiami">
-<meta property="og:description" content="我们在开发中经常用到坐标系统的转换，比如获取某个cell相对与self.view的坐标，获取scrollview上某个item的坐标。iOS系统中提供给我们用于坐标系统转换的方法如下">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/809fd07fjw1f4g4fuudrzj20gs0fqt9d.jpg">
-<meta property="og:updated_time" content="2016-06-01T15:25:35.000Z">
+<meta property="og:description" content="PLA 1.2 App审核解决方案最近提交App的时候遇到PLA 1.2 的问题，来来回回，浪费了不少时间，这里简单描述下经过，希望对大家有所帮助">
+<meta property="og:updated_time" content="2017-05-11T00:08:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS中坐标转换">
-<meta name="twitter:description" content="我们在开发中经常用到坐标系统的转换，比如获取某个cell相对与self.view的坐标，获取scrollview上某个item的坐标。iOS系统中提供给我们用于坐标系统转换的方法如下">
-<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/809fd07fjw1f4g4fuudrzj20gs0fqt9d.jpg">
+<meta name="twitter:title" content="PLA 1.2 App审核解决方案">
+<meta name="twitter:description" content="PLA 1.2 App审核解决方案最近提交App的时候遇到PLA 1.2 的问题，来来回回，浪费了不少时间，这里简单描述下经过，希望对大家有所帮助">
 
     
     <link rel="alternative" href="/atom.xml" title="taitanxiami" type="application/atom+xml">
@@ -72,20 +70,20 @@
 </div>
     </header>
     <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
+      <div id="main" class="pla" itemscope itemprop="blogPost">
   
 	<article itemprop="articleBody"> 
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/06/01/iOS中坐标转换/" title="iOS中坐标转换" itemprop="url">iOS中坐标转换</a>
+      <a href="/2017/05/11/PLA 1.2解决方案/" title="PLA 1.2 App审核解决方案" itemprop="url">PLA 1.2 App审核解决方案</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="taitanxiami" target="_blank" itemprop="author">taitanxiami</a>
 		
   <p class="article-time">
-    <time datetime="2016-06-01T14:41:57.000Z" itemprop="datePublished"> Published 2016-06-01</time>
+    <time datetime="2017-05-10T23:59:33.000Z" itemprop="datePublished"> Published 2017-05-11</time>
     
   </p>
 </header>
@@ -94,37 +92,22 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#PLA-1-2-App审核解决方案"><span class="toc-number">1.</span> <span class="toc-text">PLA 1.2 App审核解决方案</span></a></li></ol>
 		
 		</div>
 		
-		<p>我们在开发中经常用到坐标系统的转换，比如获取某个cell相对与self.view的坐标，获取scrollview上某个item的坐标。iOS系统中提供给我们用于坐标系统转换的方法如下<a id="more"></a>   </p>
-<ul>
-<li>(CGPoint)convertPoint:(CGPoint)point fromView:(UIView *)view     </li>
-<li>(CGPoint)convertPoint:(CGPoint)point toView:(UIView *)view     </li>
-<li>(CGRect)convertRect:(CGRect)rect fromView:(UIView *)view    </li>
-<li>(CGRect)convertRect:(CGRect)rect toView:(UIView *)view   </li>
-</ul>
-<p>fromView是从目标坐标系转换到调用convertXXXX的视图坐标系。如果fromView为空的话，它的坐标将会使用整个窗口的坐标系，也可以理解成屏幕空间的坐标系。</p>
-<p>toView是从调用convertXXXX的视图坐标系转换到目标坐标系。如果toView为空的话，它的坐标将会使用整个窗口的坐标系，也可以理解成屏幕空间的坐标系。</p>
-<p>如图<br><img src="http://ww3.sinaimg.cn/large/809fd07fjw1f4g4fuudrzj20gs0fqt9d.jpg" alt=""></p>
-<p> viewA frame (10,10,200,200)<br> viewB frame (30,30,140,140)<br> viewC frame (20,20,100，100)   </p>
-<p>示例代码如下   </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">CGRect frameA = self.viewA.frame;   </span><br><span class="line">CGRect frameB = self.viewB.frame;   </span><br><span class="line">CGRect frameC = self.viewC.frame;   </span><br><span class="line">CGPoint centerB = self.viewB.center;   </span><br><span class="line">    </span><br><span class="line">// 从self.viewB的坐标系统转换到self.view的坐标系统</span><br><span class="line">CGPoint pointA = [self.viewB convertPoint:self.viewB.center toView:self.view];</span><br><span class="line">//pointA = (x = 140, y = 140)</span><br><span class="line"></span><br><span class="line">//    Converts a rectangle from the receiver’s coordinate system to that of another view.</span><br><span class="line">//注意这里的react 不是bounds 而是frame</span><br><span class="line">CGRect reactA = [self.viewA convertRect:frameB toView:self.view];</span><br><span class="line">//reactA = (origin = (x = 40, y = 40), size = (width = 140, height = 140))</span><br><span class="line"></span><br><span class="line">CGPoint pointC = [self.view convertPoint:self.viewC.center fromView:self.viewB];</span><br><span class="line">//pointC = (x = 110, y = 110)</span><br><span class="line"></span><br><span class="line">CGRect reactC = [self.view convertRect:frameC fromView:self.viewB];</span><br><span class="line">//reactC = (origin = (x = 60, y = 60), size = (width = 100, height = 100))</span><br></pre></td></tr></table></figure>
+		<h3 id="PLA-1-2-App审核解决方案"><a href="#PLA-1-2-App审核解决方案" class="headerlink" title="PLA 1.2 App审核解决方案"></a>PLA 1.2 App审核解决方案</h3><p>最近提交App的时候遇到PLA 1.2 的问题，来来回回，浪费了不少时间，这里简单描述下经过，希望对大家有所帮助<br><a id="more"></a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">发件人 Apple</span><br><span class="line">Thank you for your resubmission. Upon further review, we continue to find the following issue unresolved:</span><br><span class="line">PLA 1.2The Seller and Artist names associated with your app do not reflect the name of the financial institute responsible for this app in the app or its metadata, as required by section 1.2 of the Apple Developer Program License Agreement.</span><br><span class="line">Next StepsYour app must be published under a Seller name and Artist name that reflects the name of the financial institute responsible for this app. If you have developed these apps on behalf of a client, please advise your client to add you to the development team of their Apple Developer account.The Artist name is the Company name in iTunes Connect. For information on how to address this issue, please contact iTunes Connect Contact Us.</span><br></pre></td></tr></table></figure>
+<p>Apple 的意思是要App name 要和company name 保持相近的名称，一开始比较着急，担心非要修改修改App  name 才能解决，以为我的App name 完全和公司不搭边，但是为了更加灵活， 我拨打了技术支持电话400-670-1855，他们说这边可以给他审核团队提供证明材料，证明该品牌在公司名下就可以了。这里我是提供的是申请商标的图片，商标名和App name 一致，拿到资料后，添加附件，让他们继续审核就可以啦。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/iOS/">iOS</a>
-</div>
-
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/坐标转换/">坐标转换</a>
+  <span></span> <a href="/tags/iOS/">iOS</a>
   </div>
 
 </div>
@@ -133,7 +116,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://taitanxiami.com/2016/06/01/iOS中坐标转换/" data-title="iOS中坐标转换 | taitanxiami" data-tsina="null" class="share clearfix">
+	  <div data-url="http://taitanxiami.com/2017/05/11/PLA 1.2解决方案/" data-title="PLA 1.2 App审核解决方案 | taitanxiami" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -146,19 +129,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/06/04/hit-Testing/" title="hit-Testing">
-  <strong>上一篇：</strong><br/>
-  <span>
-  hit-Testing</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/04/30/UIRefreshControl/"  title="UIRefreshControl 实现简单的下拉刷新">
+<a href="/2016/06/27/使用Mantle高效构建model/"  title="使用Mantle高效构建model">
  <strong>下一篇：</strong><br/> 
- <span>UIRefreshControl 实现简单的下拉刷新
+ <span>使用Mantle高效构建model
 </span>
 </a>
 </div>
@@ -167,19 +142,12 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/06/01/iOS中坐标转换/" data-title="iOS中坐标转换" data-url="http://taitanxiami.com/2016/06/01/iOS中坐标转换/"></div>
+	<div class="ds-thread" data-thread-key="2017/05/11/PLA 1.2解决方案/" data-title="PLA 1.2 App审核解决方案" data-url="http://taitanxiami.com/2017/05/11/PLA 1.2解决方案/"></div>
 </section>
 
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
- 
- 
- 
-  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
@@ -388,55 +356,6 @@ $(document).ready(function(){
 </script>
 
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina'),
-      description = $this.attr('description');
-  var html = [
-  '<div class="hoverqrcode clearfix"></div>',
-  '<a class="overlay" id="qrcode"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-
-  $('.hoverqrcode').hide();
-
-  var myWidth = 0;
-  function updatehoverqrcode(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-    var qrsize = myWidth > 1024 ? 200:100;
-    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
-    var p = $('.article-share-qrcode').position();
-    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
-                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
-                          .qrcode(options);
-  };
-  $(window).resize(function(){
-    $('.hoverqrcode').hide();
-  });
-  $('.article-share-qrcode').click(function(){
-    updatehoverqrcode();
-    $('.hoverqrcode').toggle();
-  });
-  $('.article-share-qrcode').hover(function(){}, function(){
-      $('.hoverqrcode').hide();
-  });
-});   
-</script>
-
 
 
 <script type="text/javascript">
@@ -518,4 +437,4 @@ var _hmt = _hmt || [];
 <!-- Tiny_search End -->
 
   </body>
-</html>
+ </html>
