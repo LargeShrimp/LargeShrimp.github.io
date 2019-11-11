@@ -1,7 +1,7 @@
 
  <!DOCTYPE HTML>
-<html >
-<head>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
   
     <title>大中枢派发 | taitanxiami</title>
@@ -11,34 +11,18 @@
     
 
     
-    <meta name="description" content="大中枢派发关于ios 多线程看这篇就够了   
-一、多线程背景谈到iOS多线程，一般都会谈到四种方式：pthread、NSThread、GCD和NSOperation。其中，苹果推荐也是我们最经常使用的无疑是GCD,所以这里记录下GCD 在iOS常用用法。
-
-直接操纵线程实现多线程的弊端：
-
-开发人员必须根据系统的变化动态调整线程的数量和状态，即对开发者的负担重。   
-应用程序会在创建和维护线程">
+    <meta name="description" content="大中枢派发关于ios 多线程看这篇就够了    一、多线程背景谈到iOS多线程，一般都会谈到四种方式：pthread、NSThread、GCD和NSOperation。其中，苹果推荐也是我们最经常使用的无疑是GCD,所以这里记录下GCD 在iOS常用用法。  直接操纵线程实现多线程的弊端：  开发人员必须根据系统的变化动态调整线程的数量和状态，即对开发者的负担重。    应用程序会在创建和维护线程">
+<meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大中枢派发">
-<meta property="og:url" content="http://taitanxiami.com/2015/01/04/大中枢派发/index.html">
+<meta property="og:url" content="http://www.tesoole.com/2015/01/04/大中枢派发/index.html">
 <meta property="og:site_name" content="taitanxiami">
-<meta property="og:description" content="大中枢派发关于ios 多线程看这篇就够了   
-一、多线程背景谈到iOS多线程，一般都会谈到四种方式：pthread、NSThread、GCD和NSOperation。其中，苹果推荐也是我们最经常使用的无疑是GCD,所以这里记录下GCD 在iOS常用用法。
-
-直接操纵线程实现多线程的弊端：
-
-开发人员必须根据系统的变化动态调整线程的数量和状态，即对开发者的负担重。   
-应用程序会在创建和维护线程">
+<meta property="og:description" content="大中枢派发关于ios 多线程看这篇就够了    一、多线程背景谈到iOS多线程，一般都会谈到四种方式：pthread、NSThread、GCD和NSOperation。其中，苹果推荐也是我们最经常使用的无疑是GCD,所以这里记录下GCD 在iOS常用用法。  直接操纵线程实现多线程的弊端：  开发人员必须根据系统的变化动态调整线程的数量和状态，即对开发者的负担重。    应用程序会在创建和维护线程">
+<meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2016-12-19T06:15:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大中枢派发">
-<meta name="twitter:description" content="大中枢派发关于ios 多线程看这篇就够了   
-一、多线程背景谈到iOS多线程，一般都会谈到四种方式：pthread、NSThread、GCD和NSOperation。其中，苹果推荐也是我们最经常使用的无疑是GCD,所以这里记录下GCD 在iOS常用用法。
-
-直接操纵线程实现多线程的弊端：
-
-开发人员必须根据系统的变化动态调整线程的数量和状态，即对开发者的负担重。   
-应用程序会在创建和维护线程">
+<meta name="twitter:description" content="大中枢派发关于ios 多线程看这篇就够了    一、多线程背景谈到iOS多线程，一般都会谈到四种方式：pthread、NSThread、GCD和NSOperation。其中，苹果推荐也是我们最经常使用的无疑是GCD,所以这里记录下GCD 在iOS常用用法。  直接操纵线程实现多线程的弊端：  开发人员必须根据系统的变化动态调整线程的数量和状态，即对开发者的负担重。    应用程序会在创建和维护线程">
 
     
     <link rel="alternative" href="/atom.xml" title="taitanxiami" type="application/atom+xml">
@@ -52,7 +36,7 @@
     
     <link rel="stylesheet" href="/css/style.css">
 </head>
-
+</html>
   <body>
     <header>
       
@@ -79,7 +63,7 @@
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
 						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:taitanxiami.com">
+						<input type="hidden" name="q" value="site:www.tesoole.com">
 					</form>
 					
 					</li>
@@ -139,7 +123,7 @@
 <li>并行队列，并发队列虽然是能同时执行多个任务，但这些任务仍然是按照先到先执行(FIFO)的顺序来执行的。并发队列会基于系统负载来合适地选择并发执行这些任务。并发队列一般指的就是全局队列(Global queue)，进程中存在四个全局队列：高、中(默认)、低、后台四个优先级队列，可以调用dispatch_get_global_queue函数传入优先级来访问队列。当然我们也可以用dispatch_queue_create，并指定队列类型DISPATCH_QUEUE_CONCURRENT，来自己创建一个并发队列。</li>
 <li>主队列，与主线程功能相同。实际上，提交至main queue的任务会在主线程中执行。main queue可以调用dispatch_get_main_queue()来获得。因为main queue是与主线程相关的，所以这是一个串行队列。和其它串行队列一样，这个队列中的任务一次只能执行一个。它能保证所有的任务都在主线程执行，而主线程是唯一可用于更新 UI 的线程。<br>额外说一句，上面也说过，队列间的执行是并行的，但是也存在一些限制。比如，并行执行的队列数量受到内核数的限制，无法真正做到大量队列并行执行；比如，对于并行队列中的全局队列而言，其存在优先级关系，执行的时候也会遵循其优先顺序，而不是并行。</li>
 </ul>
-<ol>
+<ol start="2">
 <li><p>任务<br>linux内核中的任务的定义是描述进程的一种结构体，而GCD中的任务只是一个代码块，它可以指一个block或者函数指针。根据这个代码块添加进入队列的方式，将任务分为同步任务和异步任务：</p>
 <ul>
 <li>同步任务，使用dispatch_sync将任务加入队列。将同步任务加入串行队列，会顺序执行，一般不这样做并且在一个任务未结束时调起其它同步任务会死锁。将同步任务加入并行队列，会顺序执行，但是也没什么意义。</li>
@@ -277,7 +261,7 @@ dispatch_sync(serialQueue, ^{
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">dispatch_apply</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">```	</span><br><span class="line">// 因为dispatch_apply会卡住当前线程，内部的dispatch_apply会等待外部，外部的等待内部，所以死锁。</span><br><span class="line">	dispatch_queue_t queue = dispatch_queue_create(&quot;queue&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">	dispatch_apply(10, queue, ^(size_t) &#123;</span><br><span class="line">	    // 任务</span><br><span class="line">	    ...</span><br><span class="line">	    dispatch_apply(10, queue, ^(size_t) &#123;</span><br><span class="line">	        // 任务</span><br><span class="line">	        ...</span><br><span class="line">	    &#125;);</span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<ol>
+<ol start="2">
 <li>dispatch_time_t</li>
 </ol>
 <ul>
@@ -311,7 +295,7 @@ dispatch_sync(serialQueue, ^{
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://taitanxiami.com/2015/01/04/大中枢派发/" data-title="大中枢派发 | taitanxiami" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.tesoole.com/2015/01/04/大中枢派发/" data-title="大中枢派发 | taitanxiami" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -337,7 +321,7 @@ dispatch_sync(serialQueue, ^{
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/01/04/大中枢派发/" data-title="大中枢派发" data-url="http://taitanxiami.com/2015/01/04/大中枢派发/"></div>
+	<div class="ds-thread" data-thread-key="2015/01/04/大中枢派发/" data-title="大中枢派发" data-url="http://www.tesoole.com/2015/01/04/大中枢派发/"></div>
 </section>
 
 
@@ -381,15 +365,11 @@ dispatch_sync(serialQueue, ^{
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+				<li><a href="/tags/stackoverflow/" title="stackoverflow">stackoverflow<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/AutoLayout/" title="AutoLayout">AutoLayout<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/iOS/" title="iOS">iOS<sup>1</sup></a></li>
 			
 		
 			
@@ -401,11 +381,15 @@ dispatch_sync(serialQueue, ^{
 			
 		
 			
+				<li><a href="/tags/读书/" title="读书">读书<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/hit-Testing/" title="hit-Testing">hit-Testing<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/读书/" title="读书">读书<sup>1</sup></a></li>
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>1</sup></a></li>
 			
 		
 			
@@ -413,19 +397,19 @@ dispatch_sync(serialQueue, ^{
 			
 		
 			
-				<li><a href="/tags/stackoverflow/" title="stackoverflow">stackoverflow<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Mantle/" title="Mantle">Mantle<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/block/" title="block">block<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -475,7 +459,7 @@ dispatch_sync(serialQueue, ^{
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
 		
 		<a href="/about" target="_blank" title="taitanxiami">taitanxiami</a>
 		

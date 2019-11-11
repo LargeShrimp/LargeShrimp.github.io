@@ -1,7 +1,7 @@
 
  <!DOCTYPE HTML>
-<html >
-<head>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
   
     <title>Effective Objective-C 2.0 读书笔记 | taitanxiami</title>
@@ -11,37 +11,18 @@
     
 
     
-    <meta name="description" content="记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。本笔记目的是强化自己的理解，便于以后能快速查找。
-
-oc 是有smalltall 演化而来，动态绑定
-
-理解 c 内存模型
- 对象都在堆上，手动管理
-
-在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件">
+    <meta name="description" content="记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。本笔记目的是强化自己的理解，便于以后能快速查找。  oc 是有smalltall 演化而来，动态绑定  理解 c 内存模型  对象都在堆上，手动管理  在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件">
+<meta name="keywords" content="读书">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Effective Objective-C 2.0 读书笔记">
-<meta property="og:url" content="http://taitanxiami.com/2015/09/04/Effective Obejct-C 2.0 读书笔记/index.html">
+<meta property="og:url" content="http://www.tesoole.com/2015/09/04/Effective Obejct-C 2.0 读书笔记/index.html">
 <meta property="og:site_name" content="taitanxiami">
-<meta property="og:description" content="记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。本笔记目的是强化自己的理解，便于以后能快速查找。
-
-oc 是有smalltall 演化而来，动态绑定
-
-理解 c 内存模型
- 对象都在堆上，手动管理
-
-在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件">
+<meta property="og:description" content="记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。本笔记目的是强化自己的理解，便于以后能快速查找。  oc 是有smalltall 演化而来，动态绑定  理解 c 内存模型  对象都在堆上，手动管理  在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件">
+<meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2016-12-13T16:35:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Effective Objective-C 2.0 读书笔记">
-<meta name="twitter:description" content="记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。本笔记目的是强化自己的理解，便于以后能快速查找。
-
-oc 是有smalltall 演化而来，动态绑定
-
-理解 c 内存模型
- 对象都在堆上，手动管理
-
-在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件">
+<meta name="twitter:description" content="记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。本笔记目的是强化自己的理解，便于以后能快速查找。  oc 是有smalltall 演化而来，动态绑定  理解 c 内存模型  对象都在堆上，手动管理  在类的头文件中尽量少的引入其他头文件（@class）除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件">
 
     
     <link rel="alternative" href="/atom.xml" title="taitanxiami" type="application/atom+xml">
@@ -55,7 +36,7 @@ oc 是有smalltall 演化而来，动态绑定
     
     <link rel="stylesheet" href="/css/style.css">
 </head>
-
+</html>
   <body>
     <header>
       
@@ -82,7 +63,7 @@ oc 是有smalltall 演化而来，动态绑定
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
 						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:taitanxiami.com">
+						<input type="hidden" name="q" value="site:www.tesoole.com">
 					</form>
 					
 					</li>
@@ -160,14 +141,14 @@ oc 是有smalltall 演化而来，动态绑定
 <li>定义关联对象的时候可指定内存管理语义</li>
 <li>只有在其他办法不可行的时候才选用关联对象</li>
 </ul>
-<ol>
+<ol start="13">
 <li><p>用“方法调配技术”调试“黑盒方法” （ method swizzling ）</p>
 <p>举个🌰</p>
 </li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIViewController+Tracking.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">@implementation UIViewController (Tracking)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">		    </span><br><span class="line">static dispatch_once_t onceToken;</span><br><span class="line">dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">    </span><br><span class="line">    Class class = [self  class];</span><br><span class="line">    SEL originSelector = @selector(viewWillAppear:);</span><br><span class="line">    SEL swizzledSelector  = @selector(rh_viewWillAppear:);</span><br><span class="line">    </span><br><span class="line">    Method originalMenthod = class_getInstanceMethod(class, originSelector);</span><br><span class="line">    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);</span><br><span class="line">    </span><br><span class="line">    //添加新方法</span><br><span class="line">    BOOL didAddMethod = class_addMethod(class, originSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    //如果已经添加，就方法替换</span><br><span class="line">    if (didAddMethod) &#123;</span><br><span class="line">        //Replaces the implementation of a method for a given class.</span><br><span class="line">        class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMenthod), method_getTypeEncoding(originalMenthod));</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        method_exchangeImplementations(originalMenthod, swizzledMethod);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">&#125;			</span><br><span class="line">- (void)rh_viewWillAppear:(BOOL)animated &#123;</span><br><span class="line">	[self rh_viewWillAppear:animated];</span><br><span class="line">	NSLog(@&quot;viewWillAppear: %@&quot;, self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><em>在运行期可以向类中新增或者替换选择子所对应的方法实现</em></p>
-<ol>
+<ol start="14">
 <li><p>理解类对象的用意</p>
 <ul>
 <li>每个实例都有一个指向Class对象的指针，用以表明其类型，而这些Class对象则构成了类的继承体系。</li>
@@ -202,7 +183,7 @@ oc 是有smalltall 演化而来，动态绑定
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://taitanxiami.com/2015/09/04/Effective Obejct-C 2.0 读书笔记/" data-title="Effective Objective-C 2.0 读书笔记 | taitanxiami" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.tesoole.com/2015/09/04/Effective Obejct-C 2.0 读书笔记/" data-title="Effective Objective-C 2.0 读书笔记 | taitanxiami" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -236,7 +217,7 @@ oc 是有smalltall 演化而来，动态绑定
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/09/04/Effective Obejct-C 2.0 读书笔记/" data-title="Effective Objective-C 2.0 读书笔记" data-url="http://taitanxiami.com/2015/09/04/Effective Obejct-C 2.0 读书笔记/"></div>
+	<div class="ds-thread" data-thread-key="2015/09/04/Effective Obejct-C 2.0 读书笔记/" data-title="Effective Objective-C 2.0 读书笔记" data-url="http://www.tesoole.com/2015/09/04/Effective Obejct-C 2.0 读书笔记/"></div>
 </section>
 
 
@@ -280,15 +261,11 @@ oc 是有smalltall 演化而来，动态绑定
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+				<li><a href="/tags/stackoverflow/" title="stackoverflow">stackoverflow<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/AutoLayout/" title="AutoLayout">AutoLayout<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/iOS/" title="iOS">iOS<sup>1</sup></a></li>
 			
 		
 			
@@ -300,11 +277,15 @@ oc 是有smalltall 演化而来，动态绑定
 			
 		
 			
+				<li><a href="/tags/读书/" title="读书">读书<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/hit-Testing/" title="hit-Testing">hit-Testing<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/读书/" title="读书">读书<sup>1</sup></a></li>
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>1</sup></a></li>
 			
 		
 			
@@ -312,19 +293,19 @@ oc 是有smalltall 演化而来，动态绑定
 			
 		
 			
-				<li><a href="/tags/stackoverflow/" title="stackoverflow">stackoverflow<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Mantle/" title="Mantle">Mantle<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/block/" title="block">block<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -374,7 +355,7 @@ oc 是有smalltall 演化而来，动态绑定
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
 		
 		<a href="/about" target="_blank" title="taitanxiami">taitanxiami</a>
 		

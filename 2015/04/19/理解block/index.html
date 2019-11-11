@@ -1,7 +1,7 @@
 
  <!DOCTYPE HTML>
-<html >
-<head>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
   
     <title>理解block（块） | taitanxiami</title>
@@ -12,11 +12,13 @@
 
     
     <meta name="description" content="block的结构图">
+<meta name="keywords" content="block">
 <meta property="og:type" content="article">
 <meta property="og:title" content="理解block（块）">
-<meta property="og:url" content="http://taitanxiami.com/2015/04/19/理解block/index.html">
+<meta property="og:url" content="http://www.tesoole.com/2015/04/19/理解block/index.html">
 <meta property="og:site_name" content="taitanxiami">
 <meta property="og:description" content="block的结构图">
+<meta property="og:locale" content="default">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/809fd07fgw1erb980sqr6j20vo0brtbe.jpg">
 <meta property="og:updated_time" content="2016-05-26T14:29:58.000Z">
 <meta name="twitter:card" content="summary">
@@ -36,7 +38,7 @@
     
     <link rel="stylesheet" href="/css/style.css">
 </head>
-
+</html>
   <body>
     <header>
       
@@ -63,7 +65,7 @@
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
 						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:taitanxiami.com">
+						<input type="hidden" name="q" value="site:www.tesoole.com">
 					</form>
 					
 					</li>
@@ -115,7 +117,7 @@
 <p>block一般有三种，NSConcreteGlobal, NSConcreteStack, NSConcreteMalloc。<br>block是可以访问block外部的变量的。<br>NSConcreteGlobal: 就像一个全局函数一样，从头到尾待在那，始终是可用的。当Block中没有引用外部变量时，block为global类型的。<br>NSConcreteStack: 保存在栈中的block，block执行完后内存会被释放掉。当block引用了外部变量时，block为stack类型的。<br>NSConcreteMallock: 保存在堆中的block，block为引用记数为0时，内存会被释放掉。当block执行copy时，block会从栈中复制到堆中。<br>以上都针对非ARC环境而言，如果在ARC环境下，引用外部变量的block会自动保存在堆中，无需copy。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">待续。。。</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>block的理解<a href="http://answerhuang.duapp.com/index.php/2013/09/07/objective-c-blocks-syntax/#carousel-generic-38" target="_blank" rel="external">http://answerhuang.duapp.com/index.php/2013/09/07/objective-c-blocks-syntax/#carousel-generic-38</a></p>
+<p>block的理解<a href="http://answerhuang.duapp.com/index.php/2013/09/07/objective-c-blocks-syntax/#carousel-generic-38" target="_blank" rel="noopener">http://answerhuang.duapp.com/index.php/2013/09/07/objective-c-blocks-syntax/#carousel-generic-38</a></p>
 </blockquote>
   
 	</div>
@@ -139,7 +141,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://taitanxiami.com/2015/04/19/理解block/" data-title="理解block（块） | taitanxiami" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.tesoole.com/2015/04/19/理解block/" data-title="理解block（块） | taitanxiami" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -173,7 +175,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/04/19/理解block/" data-title="理解block（块）" data-url="http://taitanxiami.com/2015/04/19/理解block/"></div>
+	<div class="ds-thread" data-thread-key="2015/04/19/理解block/" data-title="理解block（块）" data-url="http://www.tesoole.com/2015/04/19/理解block/"></div>
 </section>
 
 
@@ -217,15 +219,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+				<li><a href="/tags/stackoverflow/" title="stackoverflow">stackoverflow<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/AutoLayout/" title="AutoLayout">AutoLayout<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/iOS/" title="iOS">iOS<sup>1</sup></a></li>
 			
 		
 			
@@ -237,11 +235,15 @@
 			
 		
 			
+				<li><a href="/tags/读书/" title="读书">读书<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/hit-Testing/" title="hit-Testing">hit-Testing<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/读书/" title="读书">读书<sup>1</sup></a></li>
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>1</sup></a></li>
 			
 		
 			
@@ -249,19 +251,19 @@
 			
 		
 			
-				<li><a href="/tags/stackoverflow/" title="stackoverflow">stackoverflow<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Mantle/" title="Mantle">Mantle<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/block/" title="block">block<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -311,7 +313,7 @@
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
 		
 		<a href="/about" target="_blank" title="taitanxiami">taitanxiami</a>
 		

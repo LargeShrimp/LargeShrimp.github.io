@@ -1,7 +1,7 @@
 
  <!DOCTYPE HTML>
-<html >
-<head>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
   
     <title>iOS中坐标转换 | taitanxiami</title>
@@ -12,11 +12,13 @@
 
     
     <meta name="description" content="我们在开发中经常用到坐标系统的转换，比如获取某个cell相对与self.view的坐标，获取scrollview上某个item的坐标。iOS系统中提供给我们用于坐标系统转换的方法如下">
+<meta name="keywords" content="坐标转换">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS中坐标转换">
-<meta property="og:url" content="http://taitanxiami.com/2016/06/01/iOS中坐标转换/index.html">
+<meta property="og:url" content="http://www.tesoole.com/2016/06/01/iOS中坐标转换/index.html">
 <meta property="og:site_name" content="taitanxiami">
 <meta property="og:description" content="我们在开发中经常用到坐标系统的转换，比如获取某个cell相对与self.view的坐标，获取scrollview上某个item的坐标。iOS系统中提供给我们用于坐标系统转换的方法如下">
+<meta property="og:locale" content="default">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/809fd07fjw1f4g4fuudrzj20gs0fqt9d.jpg">
 <meta property="og:updated_time" content="2016-06-01T15:25:35.000Z">
 <meta name="twitter:card" content="summary">
@@ -36,7 +38,7 @@
     
     <link rel="stylesheet" href="/css/style.css">
 </head>
-
+</html>
   <body>
     <header>
       
@@ -63,7 +65,7 @@
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
 						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:taitanxiami.com">
+						<input type="hidden" name="q" value="site:www.tesoole.com">
 					</form>
 					
 					</li>
@@ -107,7 +109,7 @@
 </ul>
 <p>fromView是从目标坐标系转换到调用convertXXXX的视图坐标系。如果fromView为空的话，它的坐标将会使用整个窗口的坐标系，也可以理解成屏幕空间的坐标系。</p>
 <p>toView是从调用convertXXXX的视图坐标系转换到目标坐标系。如果toView为空的话，它的坐标将会使用整个窗口的坐标系，也可以理解成屏幕空间的坐标系。</p>
-<p>如图<br><img src="http://ww3.sinaimg.cn/large/809fd07fjw1f4g4fuudrzj20gs0fqt9d.jpg" alt=""></p>
+<p>如图<br><img src="http://ww3.sinaimg.cn/large/809fd07fjw1f4g4fuudrzj20gs0fqt9d.jpg" alt></p>
 <p> viewA frame (10,10,200,200)<br> viewB frame (30,30,140,140)<br> viewC frame (20,20,100，100)   </p>
 <p>示例代码如下   </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">CGRect frameA = self.viewA.frame;   </span><br><span class="line">CGRect frameB = self.viewB.frame;   </span><br><span class="line">CGRect frameC = self.viewC.frame;   </span><br><span class="line">CGPoint centerB = self.viewB.center;   </span><br><span class="line">    </span><br><span class="line">// 从self.viewB的坐标系统转换到self.view的坐标系统</span><br><span class="line">CGPoint pointA = [self.viewB convertPoint:self.viewB.center toView:self.view];</span><br><span class="line">//pointA = (x = 140, y = 140)</span><br><span class="line"></span><br><span class="line">//    Converts a rectangle from the receiver’s coordinate system to that of another view.</span><br><span class="line">//注意这里的react 不是bounds 而是frame</span><br><span class="line">CGRect reactA = [self.viewA convertRect:frameB toView:self.view];</span><br><span class="line">//reactA = (origin = (x = 40, y = 40), size = (width = 140, height = 140))</span><br><span class="line"></span><br><span class="line">CGPoint pointC = [self.view convertPoint:self.viewC.center fromView:self.viewB];</span><br><span class="line">//pointC = (x = 110, y = 110)</span><br><span class="line"></span><br><span class="line">CGRect reactC = [self.view convertRect:frameC fromView:self.viewB];</span><br><span class="line">//reactC = (origin = (x = 60, y = 60), size = (width = 100, height = 100))</span><br></pre></td></tr></table></figure>
@@ -133,7 +135,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://taitanxiami.com/2016/06/01/iOS中坐标转换/" data-title="iOS中坐标转换 | taitanxiami" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.tesoole.com/2016/06/01/iOS中坐标转换/" data-title="iOS中坐标转换 | taitanxiami" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -167,7 +169,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/06/01/iOS中坐标转换/" data-title="iOS中坐标转换" data-url="http://taitanxiami.com/2016/06/01/iOS中坐标转换/"></div>
+	<div class="ds-thread" data-thread-key="2016/06/01/iOS中坐标转换/" data-title="iOS中坐标转换" data-url="http://www.tesoole.com/2016/06/01/iOS中坐标转换/"></div>
 </section>
 
 
@@ -211,15 +213,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+				<li><a href="/tags/stackoverflow/" title="stackoverflow">stackoverflow<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/AutoLayout/" title="AutoLayout">AutoLayout<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/iOS/" title="iOS">iOS<sup>1</sup></a></li>
 			
 		
 			
@@ -231,11 +229,15 @@
 			
 		
 			
+				<li><a href="/tags/读书/" title="读书">读书<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/hit-Testing/" title="hit-Testing">hit-Testing<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/读书/" title="读书">读书<sup>1</sup></a></li>
+				<li><a href="/tags/iOS/" title="iOS">iOS<sup>1</sup></a></li>
 			
 		
 			
@@ -243,19 +245,19 @@
 			
 		
 			
-				<li><a href="/tags/stackoverflow/" title="stackoverflow">stackoverflow<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Mantle/" title="Mantle">Mantle<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/block/" title="block">block<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -305,7 +307,7 @@
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
 		
 		<a href="/about" target="_blank" title="taitanxiami">taitanxiami</a>
 		
