@@ -212,26 +212,7 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<h2 id="使用Mantle高效构建model"><a href="#使用Mantle高效构建model" class="headerlink" title="使用Mantle高效构建model"></a>使用Mantle高效构建model</h2><p>iOS 开发中，从服务器获取数据，然后解析成本地的模型是我们经常要做的事，而且重复次数特别的多，没次增加一个网路请求或增加一个模型都需要完成json–&gt;model的转换，手写<code>setValuesForKeysWithDictionary</code>:显然已更不上时代的步伐，所以我们说下如何高效构建model。</p>
-<p>熟悉OC的朋友应该知道NSObject有一个方法，叫做<code>- (void)setValuesForKeysWithDictionary:(NSDictionary&lt;NSString *, id&gt; *)keyedValues;</code><br>这个方法就是利用kvc，直接让 model 调用 <code>- (void)setValue:(nullable id)value forKeyPath:(NSString *)keyPath;</code> 方法，通过遍历传入的字典的key，对model进行赋值。<br>举个简单例子，现在我们有个Model叫做User。它的property和init方法如下。</p>
-<pre><code>@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *address;
-
-- (id)initWithDictionary:(NSDictionary *)dict
-{
-    if (self = [super init]) {
-        [self setValuesForKeysWithDictionary:dict];
-    }
-    return self;
-}
-</code></pre><p>//然后我们这样给它赋值。   </p>
-<pre><code>NSDictionary *dict = @{@&quot;name&quot;:@&quot;zql&quot;, @&quot;address&quot;:@&quot;beijing&quot;};
-User *user = [[User alloc] initWithDictionary:dict];
-NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
-</code></pre><p>打印出来的结果就是 </p>
-<pre><code>User name is zql, address is beijing
-</code></pre><p>但是，这里有可能会出现几个问题。<br>如果 Dictionary 里的某一个 key 的名字和Model里的property的名字不匹配，就会造成NSUnknownKeyException 然后直接崩溃。<br>没法进行类型判断，如果你的dictionary里某个key对应的值和你的model里相同的key对应的值得类型不一致，他没有办法自动转换，而且完全不会报错。<br>当然，你可能会说，第一个问题，可以通过实现<br><code>- (void)setValue:(id)value forUndefinedKey:(NSString *)key</code>  这个方法来进行检测和修复。<br>但问题是，如果大量的key不匹配的话，你又回到了原来的问题，需要写大量重复的代码。</p>
-<p>这样分析下来，直接使用 setValuesForKeysWithDictionary 并不能实现我们的需求。<br>
+		<h2 id="使用Mantle高效构建model"><a href="#使用Mantle高效构建model" class="headerlink" title="使用Mantle高效构建model"></a>使用Mantle高效构建model</h2><p>iOS 开发中，从服务器获取数据，然后解析成本地的模型是我们经常要做的事，而且重复次数特别的多，没次增加一个网路请求或增加一个模型都需要完成json–&gt;model的转换，手写<code>setValuesForKeysWithDictionary</code>:显然已更不上时代的步伐，所以我们说下如何高效构建model。<br>
 	
 	</div>
   <a type="button" href="/2016/06/27/使用Mantle高效构建model/#more" class="btn btn-default more">Read More</a>
@@ -372,9 +353,6 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 <li><p>隐藏导航栏的返回按钮   </p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[self.navigationItem setHidesBackButton:YES animated:YES]    </span><br><span class="line">或者   </span><br><span class="line">[self.navigationItem setHidesBackButton:YES];</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>mac 显示/隐藏文件   </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.finder AppleShowAllFiles True</span><br><span class="line">defaults write com.apple.finder AppleShowAllFiles No</span><br></pre></td></tr></table></figure>
-</li>
 </ol>
 	
 	</div>
@@ -402,70 +380,7 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
   <div class="row">
 	
 	
-		<p>记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。本笔记目的是强化自己的理解，便于以后能快速查找。</p>
-<ol>
-<li><p>oc 是有smalltall 演化而来，动态绑定</p>
-</li>
-<li><p>理解 c 内存模型</p>
-<p> 对象都在堆上，手动管理</p>
-</li>
-<li><p>在类的头文件中尽量少的引入其他头文件（@class）<br>除非确有必要，否则不要引入头文件。一般来说，应在某个类的头文件中使用向前声明来提及别的类，并在实现文件中引入那些类的头文件。这样做可以尽量降低类之间的耦合（coupling）.<br>有时无法使用向前声明，比如要声明某个类遵循一项协议。这种情况下，应尽量把“该类遵循某协议”的这条声明移至“class-continuation分类中”。如果不行的话，就把协议单独放在一个头文件中，然后将其引入。<br>3.多使用字面量常量 ，字面量常量对象都是不可变得，使用可使用mutablecopy</p>
-</li>
-<li><p>多用类型常量（带类型信息），少用预处理命令</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#define ANIAMTION_DURATION  0.3   </span><br><span class="line">static const NSTimeInterval kAnimationDuration  = 0.3   </span><br><span class="line">(只在编译单元可见)   </span><br><span class="line">extern NSString * const EOCStringConstant;  （公开）</span><br><span class="line">在实现文件中  NSString * const EOCStringConstant = @“hello”;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>用枚举表示状态，选项和状态码<br>枚举和switch 使用时不需要default 分支</p>
-</li>
-<li><p>理解属性的概念</p>
-<p> @dynamic  编译器不会为这个属性自动生成存取方法或实例变量（_firstName）</p>
-<p> readonly  若某属性仅可于对象内部修改，则在“class-continuation分类”中将其由readonly属性扩展为readwrite属性<br> 当我们声明一个 readonly 的属性，外部可能会通过 KVC 修改该属性值。<br> 为了避免 KVC 修改属性值，须将定义属性所在类的类方法 + (BOOL)accessInstanceVariablesDirectly 重写，使其返回 NO.</p>
-<p> assign  基本数据类型<br> strong 拥有关系 保留新值，释放旧值，并把新值设置上去<br> weak 非拥有关系，既不保留新值，也不释放旧值（同assign）,当所指对象销毁时，自动至为nil<br> copy 同strong 类似，然后并不会保留新值，而是copy 一份</p>
-</li>
-<li><p>在对象内部尽量直接访问实例变量、</p>
-<ul>
-<li>直接访问不会触发kvo，不会触发存取方法</li>
-<li>懒加载的时候要使用属性访问</li>
-<li>dealloc的时候使用直接访问</li>
-</ul>
-</li>
-<li><p>以“类族模式”隐藏实现细节</p>
-<ul>
-<li>系统框架中经常使用类族</li>
-<li>类族模式可以把实现细节隐藏在一套简单的公共接口后面</li>
-</ul>
-</li>
-<li><p>在既有类中使用<em>关联对象</em>存放自定义数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">设置关联对象</span><br><span class="line">void  objc_setAssociatedObject (id object, void * key, id value, objc_associationPolicy policy)</span><br><span class="line">获取关联对象的值</span><br><span class="line">id objc_getAssociatedObejct(id obejct, void *key)</span><br><span class="line">移除指定对象的全部关联对象</span><br><span class="line">void objc_removeAssociatedObejcts(id obejct)</span><br></pre></td></tr></table></figure>
-<p>举个栗子</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">	</span><br><span class="line">static void *EOCMyAlertViewKey = @&quot;EOCMyAlertViewKey&quot;;</span><br><span class="line">	</span><br><span class="line">- (void)askUserAQuestion &#123;</span><br><span class="line"></span><br><span class="line"> 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@&quot;Question&quot;</span><br><span class="line">                                                          message:@&quot;What do you want to do?&quot;</span><br><span class="line">                                                         delegate:self</span><br><span class="line">                                                cancelButtonTitle:@&quot;取消&quot;</span><br><span class="line">                                                otherButtonTitles:@&quot;继续&quot;, nil];</span><br><span class="line">	void (^block)(NSInteger buttonIdx) = ^(NSInteger buttonIdx) &#123;</span><br><span class="line">    </span><br><span class="line">        if (buttonIdx == 0) &#123;</span><br><span class="line">            // cancle</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            //sure</span><br><span class="line">        &#125;</span><br><span class="line">	 &#125;;</span><br><span class="line">    </span><br><span class="line">	objc_setAssociatedObject(alertView, EOCMyAlertViewKey, block, OBJC_ASSOCIATION_COPY);</span><br><span class="line">	    </span><br><span class="line">    [alertView show];</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">- (void)alertView:(UIAlertView *)alertView</span><br><span class="line">clickedButtonAtIndex:(NSInteger)buttonIndex &#123;</span><br><span class="line">    </span><br><span class="line">   void (^block)(NSInteger) = objc_getAssociatedObject(alertView, EOCMyAlertViewKey);</span><br><span class="line">   block(buttonIndex);    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>可以通过关联对象把两个对象关联起来</li>
-<li>定义关联对象的时候可指定内存管理语义</li>
-<li>只有在其他办法不可行的时候才选用关联对象</li>
-</ul>
-<ol start="13">
-<li><p>用“方法调配技术”调试“黑盒方法” （ method swizzling ）</p>
-<p>举个🌰</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIViewController+Tracking.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">@implementation UIViewController (Tracking)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">		    </span><br><span class="line">static dispatch_once_t onceToken;</span><br><span class="line">dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">    </span><br><span class="line">    Class class = [self  class];</span><br><span class="line">    SEL originSelector = @selector(viewWillAppear:);</span><br><span class="line">    SEL swizzledSelector  = @selector(rh_viewWillAppear:);</span><br><span class="line">    </span><br><span class="line">    Method originalMenthod = class_getInstanceMethod(class, originSelector);</span><br><span class="line">    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);</span><br><span class="line">    </span><br><span class="line">    //添加新方法</span><br><span class="line">    BOOL didAddMethod = class_addMethod(class, originSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    //如果已经添加，就方法替换</span><br><span class="line">    if (didAddMethod) &#123;</span><br><span class="line">        //Replaces the implementation of a method for a given class.</span><br><span class="line">        class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMenthod), method_getTypeEncoding(originalMenthod));</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        method_exchangeImplementations(originalMenthod, swizzledMethod);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">&#125;			</span><br><span class="line">- (void)rh_viewWillAppear:(BOOL)animated &#123;</span><br><span class="line">	[self rh_viewWillAppear:animated];</span><br><span class="line">	NSLog(@&quot;viewWillAppear: %@&quot;, self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><em>在运行期可以向类中新增或者替换选择子所对应的方法实现</em></p>
-<ol start="14">
-<li><p>理解类对象的用意</p>
-<ul>
-<li>每个实例都有一个指向Class对象的指针，用以表明其类型，而这些Class对象则构成了类的继承体系。</li>
-<li>如果对象类型无法在编译器确定，那么就应该使用类型信息查询方法来探知</li>
-<li>尽量使用类型查询方法来确定对象类型，而不要直接比较类对象，因为某些对象可能实现了消息转发功能（不懂）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">isKindOfClass 判断对象是否为某些类或其派生类的实例</span><br><span class="line">isMeberOfClass 判断出对象是否为某个特定类的实例</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>用前缀避免命名空间冲突</p>
-</li>
-<li>提供<em>全能初始化方法</em> </li>
-</ol>
-
+		<p>记：这种进阶类的书记，每次拿来阅读都会有不一样的理解，每次的专注点也会不一样，这也许就是成长。本笔记目的是强化自己的理解，便于以后能快速查找。<br>
 	
 	</div>
   <a type="button" href="/2015/09/04/Effective Obejct-C 2.0 读书笔记/#more" class="btn btn-default more">Read More</a>
@@ -493,8 +408,7 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 	
 	
 		<hr>
-<p>block的结构图   </p>
-<p><img src="http://ww1.sinaimg.cn/large/809fd07fgw1erb980sqr6j20vo0brtbe.jpg" alt="block结构图"></p>
+<p>block的结构图<br>
 	
 	</div>
   <a type="button" href="/2015/04/19/理解block/#more" class="btn btn-default more">Read More</a>
@@ -561,29 +475,29 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/hit-Testing/">hit-Testing<span>1</span></a></li>
-		
 			<li><a href="/tags/AutoLayout/">AutoLayout<span>1</span></a></li>
 		
 			<li><a href="/tags/坐标转换/">坐标转换<span>1</span></a></li>
 		
-			<li><a href="/tags/下拉刷新/">下拉刷新<span>1</span></a></li>
-		
-			<li><a href="/tags/Mantle/">Mantle<span>1</span></a></li>
-		
-			<li><a href="/tags/iOS/">iOS<span>1</span></a></li>
-		
 			<li><a href="/tags/stackoverflow/">stackoverflow<span>1</span></a></li>
-		
-			<li><a href="/tags/多线程/">多线程<span>1</span></a></li>
-		
-			<li><a href="/tags/读书/">读书<span>1</span></a></li>
 		
 			<li><a href="/tags/block/">block<span>1</span></a></li>
 		
-			<li><a href="/tags/git/">git<span>1</span></a></li>
+			<li><a href="/tags/iOS/">iOS<span>1</span></a></li>
+		
+			<li><a href="/tags/读书/">读书<span>1</span></a></li>
+		
+			<li><a href="/tags/下拉刷新/">下拉刷新<span>1</span></a></li>
 		
 			<li><a href="/tags/cell高度计算/">cell高度计算<span>1</span></a></li>
+		
+			<li><a href="/tags/Mantle/">Mantle<span>1</span></a></li>
+		
+			<li><a href="/tags/git/">git<span>1</span></a></li>
+		
+			<li><a href="/tags/hit-Testing/">hit-Testing<span>1</span></a></li>
+		
+			<li><a href="/tags/多线程/">多线程<span>1</span></a></li>
 		
 		 
 		</ul>

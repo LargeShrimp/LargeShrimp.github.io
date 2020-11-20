@@ -139,11 +139,14 @@ var _hmt = _hmt || [];
 <li><p>隐藏导航栏的返回按钮   </p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[self.navigationItem setHidesBackButton:YES animated:YES]    </span><br><span class="line">或者   </span><br><span class="line">[self.navigationItem setHidesBackButton:YES];</span><br></pre></td></tr></table></figure>
 </li>
+</ol>
+<a id="more"></a>
+<ol start="2">
 <li><p>mac 显示/隐藏文件   </p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.finder AppleShowAllFiles True</span><br><span class="line">defaults write com.apple.finder AppleShowAllFiles No</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<a id="more"></a>    
+<!--more-->    
 <ol start="3">
 <li><p>注销通知</p>
 <p> 可以在vc 里的dealloc 中，但是不要调用的父类的dealloc 方法</p>

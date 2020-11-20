@@ -187,181 +187,7 @@ var _hmt = _hmt || [];
 	
 	
 		<h3 id="大中枢派发"><a href="#大中枢派发" class="headerlink" title="大中枢派发"></a>大中枢派发</h3><p><em>关于ios 多线程看这篇就够了</em>   </p>
-<h4 id="一、多线程背景"><a href="#一、多线程背景" class="headerlink" title="一、多线程背景"></a>一、多线程背景</h4><p>谈到iOS多线程，一般都会谈到四种方式：pthread、NSThread、GCD和NSOperation。其中，苹果推荐也是我们最经常使用的无疑是GCD,所以这里记录下GCD 在iOS常用用法。</p>
-<ol>
-<li><p>直接操纵线程实现多线程的<strong>弊端</strong>：</p>
-<ul>
-<li>开发人员必须根据系统的变化动态调整线程的数量和状态，即对开发者的负担重。   </li>
-<li>应用程序会在创建和维护线程上消耗很多成本，即效率低。   </li>
-</ul>
-</li>
-<li><p>GCD是一套低层级的C API，通过 GCD，开发者只需要向队列中添加一段代码块(block或C函数指针)，而不需要直接和线程打交道。GCD在后端管理着一个线程池，它不仅决定着你的代码块将在哪个线程被执行，还根据可用的系统资源对这些线程进行管理。GCD的工作方式，使其拥有很多优点（快、稳、准）：</p>
-<ul>
-<li>快，更快的内存效率，因为线程栈不暂存于应用内存。</li>
-<li>稳，提供了自动的和全面的线程池管理机制，稳定而便捷。</li>
-<li>准，提供了直接并且简单的调用接口，使用方便，准确。   </li>
-</ul>
-</li>
-</ol>
-<h4 id="二、队列和任务"><a href="#二、队列和任务" class="headerlink" title="二、队列和任务"></a>二、队列和任务</h4><ol>
-<li>队列<br>调度队列是一个对象，它会以first-in、first-out的方式管理您提交的任务。GCD有三种队列类型：</li>
-</ol>
-<ul>
-<li>串行队列，串行队列将任务以先进先出(FIFO)的顺序来执行，所以串行队列经常用来做访问某些特定资源的同步处理。你可以也根据需要创建多个队列，而这些队列相对其他队列都是并发执行的。换句话说，如果你创建了4个串行队列，每一个队列在同一时间都只执行一个任务，对这四个任务来说，他们是相互独立且并发执行的。如果需要创建串行队列，一般用dispatch_queue_create这个方法来实现，并指定队列类型DISPATCH_QUEUE_SERIAL。</li>
-<li>并行队列，并发队列虽然是能同时执行多个任务，但这些任务仍然是按照先到先执行(FIFO)的顺序来执行的。并发队列会基于系统负载来合适地选择并发执行这些任务。并发队列一般指的就是全局队列(Global queue)，进程中存在四个全局队列：高、中(默认)、低、后台四个优先级队列，可以调用dispatch_get_global_queue函数传入优先级来访问队列。当然我们也可以用dispatch_queue_create，并指定队列类型DISPATCH_QUEUE_CONCURRENT，来自己创建一个并发队列。</li>
-<li>主队列，与主线程功能相同。实际上，提交至main queue的任务会在主线程中执行。main queue可以调用dispatch_get_main_queue()来获得。因为main queue是与主线程相关的，所以这是一个串行队列。和其它串行队列一样，这个队列中的任务一次只能执行一个。它能保证所有的任务都在主线程执行，而主线程是唯一可用于更新 UI 的线程。<br>额外说一句，上面也说过，队列间的执行是并行的，但是也存在一些限制。比如，并行执行的队列数量受到内核数的限制，无法真正做到大量队列并行执行；比如，对于并行队列中的全局队列而言，其存在优先级关系，执行的时候也会遵循其优先顺序，而不是并行。</li>
-</ul>
-<ol start="2">
-<li><p>任务<br>linux内核中的任务的定义是描述进程的一种结构体，而GCD中的任务只是一个代码块，它可以指一个block或者函数指针。根据这个代码块添加进入队列的方式，将任务分为同步任务和异步任务：</p>
-<ul>
-<li>同步任务，使用dispatch_sync将任务加入队列。将同步任务加入串行队列，会顺序执行，一般不这样做并且在一个任务未结束时调起其它同步任务会死锁。将同步任务加入并行队列，会顺序执行，但是也没什么意义。</li>
-<li>异步任务，使用dispatch_async将任务加入队列。将异步任务加入串行队列，会顺序执行，并且不会出现死锁问题。将异步任务加入并行队列，会并行执行多个任务，这也是我们最常用的一种方式。</li>
-</ul>
-</li>
-<li><p>简单应用</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 队列的创建，queue1:中（默认）优先级的全局并行队列、queue2:主队列、queue3:未指定type则为串行队列、queue4:指定串行队列、queue5:指定并行队列</span><br><span class="line">dispatch_queue_t queue1 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</span><br><span class="line">dispatch_queue_t queue2 = dispatch_get_main_queue();</span><br><span class="line">dispatch_queue_t queue3 = dispatch_queue_create(&quot;queue3&quot;, NULL);</span><br><span class="line">dispatch_queue_t queue4 = dispatch_queue_create(&quot;queue4&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">dispatch_queue_t queue5 = dispatch_queue_create(&quot;queue5&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line"></span><br><span class="line">// 队列中添加异步任务</span><br><span class="line">dispatch_async(queue1, ^&#123;</span><br><span class="line">// 任务</span><br><span class="line">...</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 队列中添加同步任务</span><br><span class="line">dispatch_sync(queue1, ^&#123;</span><br><span class="line">// 任务</span><br><span class="line">...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="三、GCD常见用法和应用场景"><a href="#三、GCD常见用法和应用场景" class="headerlink" title="三、GCD常见用法和应用场景"></a>三、GCD常见用法和应用场景</h4><ol>
-<li><p>dispatch_async</p>
-<p> <strong><em>应用场景<br> 这种用法非常常见，比如开启一个异步的网络请求，待数据返回后返回主队列刷新UI；又比如请求图片，待图片返回刷新UI等等。</em></strong></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</span><br><span class="line">dispatch_async(globalQueue, ^&#123;</span><br><span class="line">    // 一个异步的任务，例如网络请求，耗时的文件操作等等</span><br><span class="line">    ...</span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        // UI刷新</span><br><span class="line">        ...</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>dispatch_after </p>
-</li>
-</ol>
-<p><strong><em>延时执行</em></strong>   </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">dispatch_queue_t queue= dispatch_get_main_queue();</span><br><span class="line">dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), queue, ^&#123;</span><br><span class="line">    // 在queue里面延迟执行的一段代码</span><br><span class="line">    ...</span><br><span class="line">&#125;);</span><br><span class="line">	</span><br><span class="line">```	   </span><br><span class="line">3. dispatch_once 单例</span><br></pre></td></tr></table></figure>
-<pre><code>static dispatch_once_t onceToken;
-</code></pre><p>dispatch_once(&amp;onceToken, ^{<br>    // 只执行一次的任务<br>    …<br>});</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">4. dispatch_group  组队列</span><br></pre></td></tr></table></figure>
-
-dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-dispatch_group_t group = dispatch_group_create();
-
-dispatch_group_async(group, queue, ^{
-    // 异步任务1
-});
-
-dispatch_group_async(group, queue, ^{
-    // 异步任务2
-});
-
-// 等待group中多个异步任务执行完毕，做一些事情，介绍两种方式
-
-// 方式1（不好，会卡住当前线程）
-dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
-...
-
-// 方式2（比较好）
-dispatch_group_notify(group, mainQueue, ^{
-    // 任务完成后，在主队列中做一些操作
-    ...
-});
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*** </span><br><span class="line">应用场景</span><br><span class="line">上述的一种方式，可以适用于自己维护的一些异步任务的同步问题；但是对于已经封装好的一些库，比如AFNetworking等，我们不获取其异步任务的队列，这里可以通过一种计数的方式控制任务间同步，下面为解决单界面多接口的一种方式。</span><br><span class="line">***</span><br></pre></td></tr></table></figure>
-</code></pre><p>  dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);<br>    dispatch_group_t group = dispatch_group_create();</p>
-<pre><code>dispatch_group_enter(group);
-dispatch_group_async(group, queue, ^{
-    // 异步任务1
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@&quot;异步任务1&quot;);
-
-        dispatch_group_leave(group);
-    });
-
-});
-
-dispatch_group_enter(group);
-dispatch_group_async(group, queue, ^{
-    // 异步任务2
-        sleep(1);
-
-      NSLog(@&quot;异步任务2&quot;);
-    dispatch_group_leave(group);
-
-});
-
-// 等待group中多个异步任务执行完毕，做一些事情，介绍两种方式
-
-// 方式2（比较好）
-dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-    // 任务完成后，在主队列中做一些操作
-      NSLog(@&quot;完成任务&quot;);
-});
-</code></pre><p> 以上达到理想，执行完任务1 和任务2 再执行notify ,输出任务完成。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">5. dispatch_barrier_async </span><br><span class="line"></span><br><span class="line">	***</span><br><span class="line">	dispatch_barrier_async的作用可以用一个词概括－－承上启下，它保证此前的任务都先于自己执行，此后的任务也迟于自己执行。本例中，任务4会在任务1、2、3都执行完之后执行，而任务5、6会等待任务4执行完后执行。</span><br><span class="line">	***</span><br></pre></td></tr></table></figure></p>
-<pre><code>dispatch_queue_t queue = dispatch_queue_create(&quot;queue&quot;, DISPATCH_QUEUE_CONCURRENT);
-dispatch_async(queue, ^{
-    // 任务1
-    ...
-});
-dispatch_async(queue, ^{
-    // 任务2
-    ...
-});
-dispatch_async(queue, ^{
-    // 任务3
-    ...
-});
-dispatch_barrier_async(queue, ^{
-    // 任务4
-    ...
-});
-dispatch_async(queue, ^{
-    // 任务5
-    ...
-});
-dispatch_async(queue, ^{
-    // 任务6
-    ...
-});
-
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">注意事项   </span><br><span class="line">和dispatch_group类似，dispatch_barrier也是异步任务间的一种同步方式，可以在比如文件的读写操作时使用，保证读操作的准确性。另外，有一点需要注意，dispatch_barrier_sync和dispatch_barrier_async只在自己创建的并发队列上有效，在全局(Global)并发队列、串行队列上，效果跟dispatch_(a)sync效果一样。</span><br><span class="line"></span><br><span class="line">6. dispatch_apply</span><br></pre></td></tr></table></figure>
-
-// for循环做一些事情，输出0123456789
-</code></pre><p>for (int i = 0; i &lt; 10; i ++) {<br>    NSLog(@”%d”, i);<br>}</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> dispatch_apply替换（当且仅当处理顺序对处理结果无影响环境），输出顺序不定，比如1098673452   </span><br><span class="line">dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</span><br></pre></td></tr></table></figure>
-</code></pre><p>/<em>! dispatch_apply函数说明
-</em></p>
-<ul>
-<li>@brief  dispatch_apply函数是dispatch_sync函数和Dispatch Group的关联API</li>
-<li>该函数按指定的次数将指定的Block追加到指定的Dispatch Queue中,并等到全部的处理执行结束<br>*</li>
-<li>@param 10    指定重复次数  指定10次</li>
-<li>@param queue 追加对象的Dispatch Queue</li>
-<li><p>@param index 带有参数的Block, index的作用是为了按执行的顺序区分各个Block<br><em>
-</em>/<br>dispatch_apply(10, queue, ^(size_t index) {<br> NSLog(@”%zu”, index);<br>});</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">***</span><br><span class="line">应用场景</span><br><span class="line">那么，dispatch_apply有什么用呢，因为dispatch_apply并行的运行机制，效率一般快于for循环的类串行机制（在for一次循环中的处理任务很多时差距比较大）。比如这可以用来拉取网络数据后提前算出各个控件的大小，防止绘制时计算，提高表单滑动流畅性，如果用for循环，耗时较多，并且每个表单的数据没有依赖关系，所以用dispatch_apply比较好。</span><br><span class="line">***</span><br><span class="line"></span><br><span class="line">7. dispatch_suspend和dispatch_resume</span><br></pre></td></tr></table></figure>
-<p> dispatch_queue_t queue = dispatch_get_main_queue();<br> dispatch_suspend(queue); //暂停队列queue<br> dispatch_resume(queue);  //恢复队列queue</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">***</span><br><span class="line">应用场景</span><br><span class="line">这种用法我还没有尝试过，不过其中有个需要注意的点。这两个函数不会影响到队列中已经执行的任务，队列暂停后，已经添加到队列中但还没有执行的任务不会执行，直到队列被恢复。</span><br><span class="line">***</span><br><span class="line"></span><br><span class="line">*拾遗*</span><br><span class="line"></span><br><span class="line">1. 死锁</span><br><span class="line"></span><br><span class="line">dispatch_sync</span><br></pre></td></tr></table></figure>
-<p> // 假设这段代码执行于主队列<br> dispatch_queue_t serialQueue = dispatch_queue_create(“serialQueue”, DISPATCH_QUEUE_SERIAL);<br> dispatch_queue_t mainQueue = dispatch_get_main_queue();</p>
-<p> // 在主队列添加同步任务<br> dispatch_sync(mainQueue, ^{</p>
-<pre><code>// 任务
-...
-</code></pre><p> });</p>
-<p> // 在串行队列添加同步任务<br> dispatch_sync(serialQueue, ^{</p>
-<pre><code>// 任务
-...
-dispatch_sync(serialQueue, ^{
-    // 任务
-    ...
-});
-</code></pre><p> };</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">dispatch_apply</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">```	</span><br><span class="line">// 因为dispatch_apply会卡住当前线程，内部的dispatch_apply会等待外部，外部的等待内部，所以死锁。</span><br><span class="line">	dispatch_queue_t queue = dispatch_queue_create(&quot;queue&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">	dispatch_apply(10, queue, ^(size_t) &#123;</span><br><span class="line">	    // 任务</span><br><span class="line">	    ...</span><br><span class="line">	    dispatch_apply(10, queue, ^(size_t) &#123;</span><br><span class="line">	        // 任务</span><br><span class="line">	        ...</span><br><span class="line">	    &#125;);</span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ol start="2">
-<li>dispatch_time_t</li>
-</ol>
-<ul>
-<li>dispatch_time_t一般在dispatch_after和dispatch_group_wait等方法里作为参数使用。这里最需要注意的是一些宏的含义。   </li>
-<li>NSEC_PER_SEC，每秒有多少纳秒。   </li>
-<li>USEC_PER_SEC，每秒有多少毫秒。   </li>
-<li>NSEC_PER_USEC，每毫秒有多少纳秒。   </li>
-<li>DISPATCH_TIME_NOW 从现在开始   </li>
-<li>DISPATCH_TIME_FOREVE 永久   </li>
-</ul>
-<p><em>time为1s的写法</em><br>dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC);</p>
-
+<h4 id="一、多线程背景"><a href="#一、多线程背景" class="headerlink" title="一、多线程背景"></a>一、多线程背景</h4><p>谈到iOS多线程，一般都会谈到四种方式：pthread、NSThread、GCD和NSOperation。其中，苹果推荐也是我们最经常使用的无疑是GCD,所以这里记录下GCD 在iOS常用用法。<br>
 	
 	</div>
   <a type="button" href="/2015/01/04/大中枢派发/#more" class="btn btn-default more">Read More</a>
@@ -430,27 +256,27 @@ dispatch_sync(serialQueue, ^{
 		
 			<li><a href="/tags/多线程/">多线程<span>1</span></a></li>
 		
-			<li><a href="/tags/git/">git<span>1</span></a></li>
-		
-			<li><a href="/tags/block/">block<span>1</span></a></li>
-		
-			<li><a href="/tags/AutoLayout/">AutoLayout<span>1</span></a></li>
-		
-			<li><a href="/tags/cell高度计算/">cell高度计算<span>1</span></a></li>
+			<li><a href="/tags/hit-Testing/">hit-Testing<span>1</span></a></li>
 		
 			<li><a href="/tags/下拉刷新/">下拉刷新<span>1</span></a></li>
-		
-			<li><a href="/tags/Mantle/">Mantle<span>1</span></a></li>
-		
-			<li><a href="/tags/stackoverflow/">stackoverflow<span>1</span></a></li>
 		
 			<li><a href="/tags/坐标转换/">坐标转换<span>1</span></a></li>
 		
 			<li><a href="/tags/iOS/">iOS<span>1</span></a></li>
 		
-			<li><a href="/tags/hit-Testing/">hit-Testing<span>1</span></a></li>
+			<li><a href="/tags/block/">block<span>1</span></a></li>
+		
+			<li><a href="/tags/AutoLayout/">AutoLayout<span>1</span></a></li>
+		
+			<li><a href="/tags/git/">git<span>1</span></a></li>
+		
+			<li><a href="/tags/cell高度计算/">cell高度计算<span>1</span></a></li>
+		
+			<li><a href="/tags/Mantle/">Mantle<span>1</span></a></li>
 		
 			<li><a href="/tags/读书/">读书<span>1</span></a></li>
+		
+			<li><a href="/tags/stackoverflow/">stackoverflow<span>1</span></a></li>
 		
 		 
 		</ul>

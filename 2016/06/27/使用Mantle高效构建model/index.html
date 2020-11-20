@@ -135,8 +135,7 @@ var _hmt = _hmt || [];
 	<div class="mypage">		
 	  		
 
-	  <h2 id="使用Mantle高效构建model"><a href="#使用Mantle高效构建model" class="headerlink" title="使用Mantle高效构建model"></a>使用Mantle高效构建model</h2><p>iOS 开发中，从服务器获取数据，然后解析成本地的模型是我们经常要做的事，而且重复次数特别的多，没次增加一个网路请求或增加一个模型都需要完成json–&gt;model的转换，手写<code>setValuesForKeysWithDictionary</code>:显然已更不上时代的步伐，所以我们说下如何高效构建model。</p>
-<p>熟悉OC的朋友应该知道NSObject有一个方法，叫做<code>- (void)setValuesForKeysWithDictionary:(NSDictionary&lt;NSString *, id&gt; *)keyedValues;</code><br>这个方法就是利用kvc，直接让 model 调用 <code>- (void)setValue:(nullable id)value forKeyPath:(NSString *)keyPath;</code> 方法，通过遍历传入的字典的key，对model进行赋值。<br>举个简单例子，现在我们有个Model叫做User。它的property和init方法如下。</p>
+	  <h2 id="使用Mantle高效构建model"><a href="#使用Mantle高效构建model" class="headerlink" title="使用Mantle高效构建model"></a>使用Mantle高效构建model</h2><p>iOS 开发中，从服务器获取数据，然后解析成本地的模型是我们经常要做的事，而且重复次数特别的多，没次增加一个网路请求或增加一个模型都需要完成json–&gt;model的转换，手写<code>setValuesForKeysWithDictionary</code>:显然已更不上时代的步伐，所以我们说下如何高效构建model。<br><a id="more"></a><br>熟悉OC的朋友应该知道NSObject有一个方法，叫做<code>- (void)setValuesForKeysWithDictionary:(NSDictionary&lt;NSString *, id&gt; *)keyedValues;</code><br>这个方法就是利用kvc，直接让 model 调用 <code>- (void)setValue:(nullable id)value forKeyPath:(NSString *)keyPath;</code> 方法，通过遍历传入的字典的key，对model进行赋值。<br>举个简单例子，现在我们有个Model叫做User。它的property和init方法如下。</p>
 <pre><code>@property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *address;
 
@@ -154,7 +153,7 @@ NSLog(@&quot;User name is %@, address is %@&quot;, user.name, user.address);
 </code></pre><p>打印出来的结果就是 </p>
 <pre><code>User name is zql, address is beijing
 </code></pre><p>但是，这里有可能会出现几个问题。<br>如果 Dictionary 里的某一个 key 的名字和Model里的property的名字不匹配，就会造成NSUnknownKeyException 然后直接崩溃。<br>没法进行类型判断，如果你的dictionary里某个key对应的值和你的model里相同的key对应的值得类型不一致，他没有办法自动转换，而且完全不会报错。<br>当然，你可能会说，第一个问题，可以通过实现<br><code>- (void)setValue:(id)value forUndefinedKey:(NSString *)key</code>  这个方法来进行检测和修复。<br>但问题是，如果大量的key不匹配的话，你又回到了原来的问题，需要写大量重复的代码。</p>
-<p>这样分析下来，直接使用 setValuesForKeysWithDictionary 并不能实现我们的需求。<br><a id="more"></a></p>
+<p>这样分析下来，直接使用 setValuesForKeysWithDictionary 并不能实现我们的需求。<br><!--more--></p>
 <h3 id="Modle的基本用法"><a href="#Modle的基本用法" class="headerlink" title="Modle的基本用法"></a>Modle的基本用法</h3><p>自定义Model的时候都需要集成自MTLModel，并且实现MTLJSONSerializing协议，例如下面的:</p>
 <pre><code>typedef NS_ENUM(NSUInteger, GHIssueState) {
     GHIssueStateOpen,
